@@ -2,8 +2,8 @@
 
 namespace GenieFintech\DevLogin\Http\Controllers;
 
-use GenieFintech\DevLogin\DevLoginServiceProvider;
 use GenieFintech\DevLogin\Auth\AuthenticatesUsers;
+use GenieFintech\DevLogin\DevLoginServiceProvider;
 
 class LoginController
 {
