@@ -14,7 +14,7 @@ class Developer extends Model
     protected $fillable = [
         'name',
         'username',
-        'password'
+        'password',
     ];
 
     /**

@@ -4,7 +4,6 @@ namespace GenieFintech\DevLogin\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use GenieFintech\DevLogin\SkeletonServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -26,6 +25,5 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-
     }
 }

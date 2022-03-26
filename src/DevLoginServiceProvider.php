@@ -2,9 +2,9 @@
 
 namespace GenieFintech\DevLogin;
 
+use GenieFintech\DevLogin\Commands\CreateDevUserCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use GenieFintech\DevLogin\Commands\CreateDevUserCommand;
 
 class DevLoginServiceProvider extends PackageServiceProvider
 {
