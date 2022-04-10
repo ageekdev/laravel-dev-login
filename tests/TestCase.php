@@ -15,7 +15,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            DevLoginServiceProvider::class
+            DevLoginServiceProvider::class,
         ];
     }
 
