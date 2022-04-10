@@ -2,8 +2,8 @@
 
 namespace GenieFintech\DevLogin\Auth;
 
-use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Str;
 
 /**
@@ -37,7 +37,7 @@ class ConfigUserProvider implements UserProvider
     public function retrieveById($identifier): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
         foreach ($this->user_data as $value) {
-            if($value['id'] === $identifier) {
+            if ($value['id'] === $identifier) {
                 return $this->getGenericUser($value);
             }
         }
@@ -55,10 +55,11 @@ class ConfigUserProvider implements UserProvider
     public function retrieveByToken($identifier, $token): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
         foreach ($this->user_data as $value) {
-            if($value['id'] === $identifier && $value['remember_me'] === $token) {
+            if ($value['id'] === $identifier && $value['remember_me'] === $token) {
                 return $this->getGenericUser($value);
             }
         }
+
         return null;
     }
 
@@ -71,7 +72,6 @@ class ConfigUserProvider implements UserProvider
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-
     }
 
     /**
@@ -85,7 +85,7 @@ class ConfigUserProvider implements UserProvider
         foreach ($this->user_data as $value) {
             foreach ($credentials as $c_key => $c_value) {
                 if (! Str::contains($c_key, 'password')) {
-                    if($value[$c_key] == $c_value) {
+                    if ($value[$c_key] == $c_value) {
                         return $this->getGenericUser($value);
                     }
                 }

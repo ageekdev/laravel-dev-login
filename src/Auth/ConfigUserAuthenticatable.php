@@ -129,5 +129,4 @@ class ConfigUserAuthenticatable implements Authenticatable
     {
         unset($this->attributes[$key]);
     }
-
 }
