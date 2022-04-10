@@ -18,7 +18,7 @@ trait AuthenticatesUsers
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('dev-login::auth.login');
     }
 
     /**
@@ -154,7 +154,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'username';
+        return 'email';
     }
 
     /**
@@ -177,7 +177,7 @@ trait AuthenticatesUsers
 
         return $request->wantsJson()
             ? new JsonResponse([], 204)
-            : redirect('/');
+            : redirect()->route('login');
     }
 
     /**
@@ -198,6 +198,6 @@ trait AuthenticatesUsers
      */
     protected function guard()
     {
-        return Auth::guard();
+        return Auth::guard('developer');
     }
 }
