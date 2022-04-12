@@ -14,7 +14,7 @@ Currently, we support-
 
 ## What It Does
 
-This package allows you to login the developer associate actions(eg.log).
+This package allows you to login the developer associate actions (e.g.log views).
 
 ## Installation
 
