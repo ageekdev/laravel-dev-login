@@ -38,7 +38,6 @@ it('it_cant_authenticate_a_user_with_invalid_password', function () {
     ], $response->exception->errors());
 });
 it('it_cant_authenticate_unknown_credential', function () {
-
     $request = Request::create('dev/login', 'POST', [
         'email' => "wrong_email",
         'password' => "wrong_password",
@@ -57,6 +56,3 @@ it('it_cant_authenticate_unknown_credential', function () {
         ],
     ], $response->exception->errors());
 });
-
-
-
