@@ -5,6 +5,7 @@ namespace GenieFintech\DevLogin;
 use GenieFintech\DevLogin\Auth\ConfigUserProvider;
 use GenieFintech\DevLogin\Commands\CreateDevUserCommand;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -20,6 +21,14 @@ class DevLoginServiceProvider extends PackageServiceProvider
 
     public function packageBooted()
     {
+        Config::set('auth.guards.developer', [
+            'driver' => 'session',
+            'provider' => 'config_user',
+        ]);
+        Config::set('auth.providers.config_user', [
+            'driver' => 'config_user',
+        ]);
+
         Auth::provider('config_user', function ($app, array $config) {
             return new ConfigUserProvider(config('dev-login.users'));
         });
@@ -44,7 +53,7 @@ class DevLoginServiceProvider extends PackageServiceProvider
         Route::group([
             'prefix' => config('dev-login.path', 'dev'),
         ], function () {
-            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });
     }
 }
