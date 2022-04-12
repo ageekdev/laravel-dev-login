@@ -5,7 +5,19 @@
 
 Developer Login for Laravel
 
+## Prerequisites
+Currently, we support-
+- [![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](http://laravel.com)
+- [![Laravel 9.x](https://img.shields.io/badge/php-%5E8.0-blue)](https://www.php.net/releases/8.0/en.php)
+
+## Documentation, Installation, and Usage Instructions
+
+## What It Does
+
+This package allows you to login the developer associate actions(eg.log).
+
 ## Installation
+
 You can install this package via composer using this command:
 
 ```bash
@@ -13,6 +25,14 @@ composer require genie-fintech/dev-login
 ```
 
 ## USAGE
+
+`http://example.test/dev/login` type in url bar. should see the login page. type email and password
+
+## DEVELOPER CREDENTIALS
+
+`"email"=>genie-dev@geniefintech.com,
+"password" => "6R0XMNEU",
+`
 
 ## Testing
 
