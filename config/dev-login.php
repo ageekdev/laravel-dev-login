@@ -7,7 +7,7 @@ return [
     'users' => [
         [
             "id" => "1",
-            "email" => "tnw@geniefintech.com",
+            "email" => "genie-dev@geniefintech.com",
             "name" => "TNW",
             "password" => "6R0XMNEU",
             "remember_me" => ""

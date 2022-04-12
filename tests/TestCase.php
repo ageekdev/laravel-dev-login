@@ -2,15 +2,18 @@
 
 namespace GenieFintech\DevLogin\Tests;
 
+use GenieFintech\DevLogin\Auth\AuthenticatesUsers;
 use GenieFintech\DevLogin\DevLoginServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Pipeline;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Testing\TestResponse;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
+    use AuthenticatesUsers;
 
     protected function getPackageProviders($app)
     {
@@ -21,5 +24,37 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
+        Config::set('auth.guards.developer', [
+            'driver' => 'session',
+            'provider' => 'config_user',
+        ]);
+        Config::set('auth.providers.config_user', [
+            'driver' => 'config_user',
+        ]);
+    }
+
+    protected function tearDown(): void
+    {
+        Auth::logout();
+
+        parent::tearDown();
+    }
+
+    protected function handleRequestUsing(Request $request, callable $callback)
+    {
+        return new TestResponse(
+            (new Pipeline($this->app))
+                ->send($request)
+                ->through([
+                    \Illuminate\Session\Middleware\StartSession::class,
+                ])
+                ->then($callback)
+        );
+    }
+
+    public function getLoginData()
+    {
+        $users = Config::get('dev-login.users');
+        return collect($users);
     }
 }
