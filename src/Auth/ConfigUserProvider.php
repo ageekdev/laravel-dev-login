@@ -16,7 +16,7 @@ class ConfigUserProvider implements UserProvider
      *
      * @var array
      */
-    protected array $user_data;
+    protected Collection $user_data;
 
     /**
      * Create a new config user provider.
@@ -25,31 +25,29 @@ class ConfigUserProvider implements UserProvider
      */
     public function __construct(array $user_data)
     {
-        $this->user_data = $user_data;
+        $this->user_data = collect($user_data);
     }
 
     /**
      * Retrieve a user by their unique identifier.
      *
-     * @param  mixed  $identifier
+     * @param mixed $identifier
      * @return \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable|null
      */
     public function retrieveById($identifier): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        foreach ($this->user_data as $value) {
-            if ($value['id'] === $identifier) {
-                return $this->getGenericUser($value);
-            }
+        $filteredUser = $this->user_data->where('id', $identifier)->first();
+        if ($filteredUser) {
+            return $this->getGenericUser($filteredUser);
         }
-
         return null;
     }
 
     /**
      * Retrieve a user by their unique identifier and "remember me" token.
      *
-     * @param  mixed  $identifier
-     * @param  string  $token
+     * @param mixed $identifier
+     * @param string $token
      * @return \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable|null
      */
     public function retrieveByToken($identifier, $token): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
@@ -66,8 +64,8 @@ class ConfigUserProvider implements UserProvider
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param  \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable  $user
-     * @param  string  $token
+     * @param \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable $user
+     * @param string $token
      * @return void
      */
     public function updateRememberToken(Authenticatable $user, $token)
@@ -77,19 +75,16 @@ class ConfigUserProvider implements UserProvider
     /**
      * Retrieve a user by the given credentials.
      *
-     * @param  array  $credentials
+     * @param array $credentials
      * @return \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable|null
      */
     public function retrieveByCredentials(array $credentials): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        foreach ($this->user_data as $value) {
-            foreach ($credentials as $c_key => $c_value) {
-                if (! Str::contains($c_key, 'password')) {
-                    if ($value[$c_key] == $c_value) {
-                        return $this->getGenericUser($value);
-                    }
-                }
-            }
+        $filteredUser = $this->user_data->where('email', $credentials['email'])
+            ->where('password', $credentials['password'])->first();
+
+        if ($filteredUser) {
+            return $this->getGenericUser($filteredUser);
         }
 
         return null;
@@ -103,8 +98,8 @@ class ConfigUserProvider implements UserProvider
      */
     protected function getGenericUser(mixed $user): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        if (! is_null($user)) {
-            return new ConfigUserAuthenticatable((array) $user);
+        if (!is_null($user)) {
+            return new ConfigUserAuthenticatable((array)$user);
         }
 
         return null;
@@ -113,8 +108,8 @@ class ConfigUserProvider implements UserProvider
     /**
      * Validate a user against the given credentials.
      *
-     * @param  \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable  $user
-     * @param  array  $credentials
+     * @param \GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable $user
+     * @param array $credentials
      * @return bool
      */
     public function validateCredentials(Authenticatable $user, array $credentials): bool
