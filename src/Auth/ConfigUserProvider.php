@@ -4,7 +4,6 @@ namespace GenieFintech\DevLogin\Auth;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Support\Str;
 
 /**
  * Json File based user storage retrieval
@@ -40,6 +39,7 @@ class ConfigUserProvider implements UserProvider
         if ($filteredUser) {
             return $this->getGenericUser($filteredUser);
         }
+
         return null;
     }
 
@@ -98,7 +98,7 @@ class ConfigUserProvider implements UserProvider
      */
     protected function getGenericUser(mixed $user): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        if (!is_null($user)) {
+        if (! is_null($user)) {
             return new ConfigUserAuthenticatable((array)$user);
         }
 
