@@ -18,4 +18,3 @@ it('it_can_generate_throttle_key', function () {
 
     $this->assertSame($data['email'] . '|127.0.0.1', $method->invoke($throttle, $request));
 });
-

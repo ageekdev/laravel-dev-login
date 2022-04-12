@@ -55,6 +55,7 @@ class TestCase extends Orchestra
     public function getLoginData()
     {
         $users = Config::get('dev-login.users');
+
         return collect($users);
     }
 }
