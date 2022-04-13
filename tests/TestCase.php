@@ -24,13 +24,7 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        Config::set('auth.guards.developer', [
-            'driver' => 'session',
-            'provider' => 'config_user',
-        ]);
-        Config::set('auth.providers.config_user', [
-            'driver' => 'config_user',
-        ]);
+
     }
 
     protected function tearDown(): void

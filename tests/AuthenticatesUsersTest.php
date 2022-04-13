@@ -1,11 +1,11 @@
 <?php
 
-
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-it('it_can_authenticate_a_user', function () {
+it('can authenticate a user', function () {
     $data = $this->getLoginData()->first();
+
     $request = Request::create('dev/login', 'POST', [
         'email' => $data['email'],
         'password' => $data['password'],
@@ -13,13 +13,14 @@ it('it_can_authenticate_a_user', function () {
         'HTTP_ACCEPT' => 'application/json',
     ]);
 
-    $response = $this->handleRequestUsing($request, function ($request) {
+    $this->handleRequestUsing($request, function ($request) {
         return $this->login($request);
     })->assertStatus(204);
 });
-it('it_cant_authenticate_a_user_with_invalid_password', function () {
+
+it('cant authenticate a user with invalid_password', function () {
     $data = $this->getLoginData()->first();
-    $request = Request::create('dev/login', 'POST', [
+    $request = Request::create('login', 'POST', [
         'email' => $data['email'],
         'password' => "wrong_password",
     ], [], [], [
@@ -37,7 +38,8 @@ it('it_cant_authenticate_a_user_with_invalid_password', function () {
         ],
     ], $response->exception->errors());
 });
-it('it_cant_authenticate_unknown_credential', function () {
+
+it('cant authenticate unknown credential', function () {
     $request = Request::create('dev/login', 'POST', [
         'email' => "wrong_email",
         'password' => "wrong_password",
