@@ -24,7 +24,6 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-
     }
 
     protected function tearDown(): void
