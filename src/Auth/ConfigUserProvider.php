@@ -4,6 +4,7 @@ namespace GenieFintech\DevLogin\Auth;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
+use Illuminate\Support\Collection;
 
 /**
  * Json File based user storage retrieval
