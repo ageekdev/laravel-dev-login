@@ -25,7 +25,7 @@ trait AuthenticatesUsers
      * Handle a login request to the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -124,8 +124,8 @@ trait AuthenticatesUsers
      * The user has been authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
+     * @param  mixed $user
+     * @return mixed|void
      */
     protected function authenticated(Request $request, $user)
     {
@@ -184,7 +184,7 @@ trait AuthenticatesUsers
      * The user has logged out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @return mixed|void
      */
     protected function loggedOut(Request $request)
     {
@@ -198,6 +198,6 @@ trait AuthenticatesUsers
      */
     protected function guard()
     {
-        return Auth::guard('developer');
+        return Auth::guard(config('dev-login.auth.guard_name'));
     }
 }

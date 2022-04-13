@@ -21,15 +21,18 @@ class DevLoginServiceProvider extends PackageServiceProvider
 
     public function packageBooted()
     {
-        Config::set('auth.guards.developer', [
+        $provider_driver = config('dev-login.auth.provider_driver');
+        $guard_name = config('dev-login.auth.guard_name');
+
+        Config::set('auth.guards.' . $guard_name, [
             'driver' => 'session',
-            'provider' => 'config_user',
+            'provider' => $provider_driver,
         ]);
-        Config::set('auth.providers.config_user', [
-            'driver' => 'config_user',
+        Config::set('auth.providers.' . $provider_driver, [
+            'driver' => $provider_driver,
         ]);
 
-        Auth::provider('config_user', function ($app, array $config) {
+        Auth::provider($provider_driver, function ($app, array $config) {
             return new ConfigUserProvider(config('dev-login.users'));
         });
     }
