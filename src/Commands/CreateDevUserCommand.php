@@ -3,6 +3,7 @@
 namespace GenieFintech\DevLogin\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 class CreateDevUserCommand extends Command
@@ -34,7 +35,7 @@ class CreateDevUserCommand extends Command
         $path = config_path('dev-login.php');
         $arr = include config_path('dev-login.php');
 
-        $collect = collect($arr['users']);
+        $collect = collect(Arr::get($arr, 'users', []));
         $checkUserEmail = $collect->where('email', $this->email)->first();
 
         if ($checkUserEmail) {
@@ -63,12 +64,12 @@ class CreateDevUserCommand extends Command
     }
 
     /**
-     * @param mixed $arr
+     * @param array $arr
      * @param string $path
      *
      * @return void
      */
-    public function insertDeveloper(mixed $arr, string $path): void
+    public function insertDeveloper(array $arr, string $path): void
     {
         $arr['users'][] = [
             "id" => uniqid(),
@@ -78,8 +79,9 @@ class CreateDevUserCommand extends Command
             "remember_me" => "",
         ];
 
-        $data = var_export($arr, 1);
-        file_put_contents($path, "<?php\n return $data ;");
+        $data = $this->varExport($arr);
+        $data = $this->removeArrayIndex(count($arr), $data);
+        file_put_contents($path, "<?php\nreturn $data;");
     }
 
     /**
@@ -90,5 +92,24 @@ class CreateDevUserCommand extends Command
         $this->email = $this->ask('Login Email?');
         $this->developerName = $this->ask('Developer Name?');
         $this->password = $this->secret('Password');
+    }
+
+    private function varExport(array $context): string
+    {
+        $export = var_export($context, TRUE);
+        $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+        $array = preg_split("/\r\n|\n|\r/", $export);
+        $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [NULL, ']$1', ' => ['], $array);
+
+        return join(PHP_EOL, array_filter(["["] + $array));
+    }
+
+    private function removeArrayIndex(int $count, String $context): string
+    {
+        for ($x = 0; $x <= $count; $x++) {
+            $context = str_replace("$x => [", "[", $context);
+        }
+
+        return $context;
     }
 }
