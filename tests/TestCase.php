@@ -24,6 +24,7 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
+        $this->setLoginData();
     }
 
     protected function tearDown(): void
@@ -50,5 +51,15 @@ class TestCase extends Orchestra
         $users = Config::get('dev-login.users');
 
         return collect($users);
+    }
+
+    public function setLoginData()
+    {
+        Config::set('dev-login.users', [
+            [
+                'email' => "genie-dev@geniefintech.com",
+                'password' => "6R0XMNEU",
+            ],
+        ]);
     }
 }
