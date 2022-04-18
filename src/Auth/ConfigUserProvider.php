@@ -14,7 +14,7 @@ class ConfigUserProvider implements UserProvider
     /**
      * The table containing the users.
      *
-     * @var array
+     * @var Collection
      */
     protected Collection $user_data;
 
