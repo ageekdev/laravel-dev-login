@@ -1,11 +1,13 @@
 {
     "name": "genie-fintech/dev-login",
-    "description": "Laravel Developer Login",
+    "description": "Developer Login for Laravel",
     "keywords": [
         "gennie-fintech",
         "laravel",
         "developer",
-        "login"
+        "login",
+        "developer-login",
+        "developer-auth"
     ],
     "homepage": "https://github.com/genie-fintech/dev-login",
     "license": "MIT",
