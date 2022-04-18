@@ -101,7 +101,11 @@ class CreateDevUserCommand extends Command
         $array = preg_split("/\r\n|\n|\r/", $export);
         $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [null, ']$1', ' => ['], $array);
 
-        return join(PHP_EOL, array_filter(["["] + $array));
+        if (is_array($array)) {
+            $array = array_filter(["["] + $array);
+        }
+
+        return join(PHP_EOL, $array);
     }
 
     private function removeArrayIndex(int $count, String $context): string
