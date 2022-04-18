@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Validator;
 
 class CreateDevUserCommand extends Command
 {
-    protected string $email, $developerName, $password;
+    protected string $email;
+    protected string $developerName;
+    protected string $password;
 
     public $signature = 'dev:user';
 
