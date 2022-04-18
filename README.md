@@ -1,18 +1,11 @@
 <h1 align="center">Laravel Developer Login</h1>
 
+[![Laravel 8.x](https://img.shields.io/badge/Laravel-8.x-red.svg?style=flat-square)](http://laravel.com)
 [![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](http://laravel.com)
+[![PHP 8.x](https://img.shields.io/badge/php-%5E8.0-blue)](https://www.php.net/releases/8.0/en.php)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/genie-fintech/dev-login/run-tests?label=tests&style=flat-square)](https://github.com/genie-fintech/dev-login/actions?query=workflow%3Arun-tests+branch%3Amain)
 
 Developer Login for Laravel
-
-## Prerequisites
-
-Currently, we support-
-
-- [![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](http://laravel.com)
-- [![Laravel 9.x](https://img.shields.io/badge/php-%5E8.0-blue)](https://www.php.net/releases/8.0/en.php)
-
-## Documentation, Installation, Setup and Usage Instructions
 
 ## What It Does
 
@@ -26,12 +19,11 @@ You can install this package via composer using this command:
 composer require genie-fintech/dev-login
 ```
 
-## Setup
+The package will automatically register itself.
 
-Publish configuration file.
-
+Publish configuration and asset files
 ```bash
-php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider"
+php artisan vendor:publish --provider="GenieFintech\Num\NumServiceProvider"
 ```
 
 ## Setup developer account
