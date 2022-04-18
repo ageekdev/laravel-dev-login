@@ -5,10 +5,6 @@
 [![PHP 8.x](https://img.shields.io/badge/php-%5E8.0-blue)](https://www.php.net/releases/8.0/en.php)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/genie-fintech/dev-login/run-tests?label=tests&style=flat-square)](https://github.com/genie-fintech/dev-login/actions?query=workflow%3Arun-tests+branch%3Amain)
 
-Developer Login for Laravel
-
-## What It Does
-
 This package allows you to login the developer associate actions (e.g.log views).
 
 ## Installation
