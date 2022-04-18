@@ -1,60 +1,40 @@
 <?php
 
+use function Pest\Laravel\post;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-it('can authenticate a user', function () {
-    $data = $this->getLoginData()->first();
+it('can authenticate a user', function ($email, $password) {
+    post('dev/login', [
+        'email' => $email,
+        'password' => $password,
 
-    $request = Request::create('dev/login', 'POST', [
-        'email' => $data['email'],
-        'password' => $data['password'],
-    ], [], [], [
-        'HTTP_ACCEPT' => 'application/json',
-    ]);
+    ])->assertSessionHasNoErrors();
+})->with('logins');
 
-    $this->handleRequestUsing($request, function ($request) {
-        return $this->login($request);
-    })->assertStatus(204);
-});
+it('can not authenticate a user with invalid password', function ($email, $password) {
 
-it('cant authenticate a user with invalid_password', function () {
-    $data = $this->getLoginData()->first();
-    $request = Request::create('login', 'POST', [
-        'email' => $data['email'],
-        'password' => "wrong_password",
-    ], [], [], [
-        'HTTP_ACCEPT' => 'application/json',
-    ]);
-
-    $response = $this->handleRequestUsing($request, function ($request) {
-        return $this->login($request);
-    })->assertUnprocessable();
-
-    $this->assertInstanceOf(ValidationException::class, $response->exception);
-    $this->assertSame([
-        'email' => [
-            'These credentials do not match our records.',
-        ],
-    ], $response->exception->errors());
-});
-
-it('cant authenticate unknown credential', function () {
-    $request = Request::create('dev/login', 'POST', [
+    post('dev/login', [
         'email' => "wrong_email",
-        'password' => "wrong_password",
-    ], [], [], [
-        'HTTP_ACCEPT' => 'application/json',
+        'password' => $password,
+
+    ])->assertSessionHasErrors([
+        'email' => 'These credentials do not match our records.'
     ]);
 
-    $response = $this->handleRequestUsing($request, function ($request) {
-        return $this->login($request);
-    })->assertUnprocessable();
+})->with('invalid_logins');
 
-    $this->assertInstanceOf(ValidationException::class, $response->exception);
-    $this->assertSame([
-        'email' => [
-            'These credentials do not match our records.',
-        ],
-    ], $response->exception->errors());
-});
+it('cant authenticate unknown credential', function ($email, $password) {
+    post('dev/login', [
+        'email' => $email,
+        'password' => $password,
+
+    ])->assertSessionHasErrors([
+        'email' => 'These credentials do not match our records.'
+    ]);
+
+})->with('invalid_logins');
+
+
+
+

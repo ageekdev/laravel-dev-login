@@ -13,7 +13,7 @@ return [
         [
             "id" => "1",
             "email" => "genie-dev@geniefintech.com",
-            "name" => "TNW",
+            "name" => "developer",
             "password" => "6R0XMNEU",
             "remember_me" => ""
         ]
