@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CreateDevUserCommand extends Command
 {
-    protected string $email;
-    protected string $developerName;
-    protected string $password;
+    protected string $email, $developerName, $password;
 
     public $signature = 'dev:user';
 
@@ -28,7 +26,7 @@ class CreateDevUserCommand extends Command
                 $this->error($error);
             }
 
-            return false;
+            return self::INVALID;
         }
 
         $path = config_path('dev-login.php');
@@ -40,7 +38,7 @@ class CreateDevUserCommand extends Command
         if ($checkUserEmail) {
             $this->error('User already exist');
 
-            return false;
+            return self::INVALID;
         }
 
         $this->insertDeveloper($arr, $path);
@@ -65,6 +63,7 @@ class CreateDevUserCommand extends Command
     /**
      * @param mixed $arr
      * @param string $path
+     *
      * @return void
      */
     public function insertDeveloper(mixed $arr, string $path): void
