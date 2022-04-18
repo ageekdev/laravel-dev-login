@@ -27,6 +27,7 @@ class CreateDevUserCommand extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return false;
         }
 
@@ -38,6 +39,7 @@ class CreateDevUserCommand extends Command
 
         if ($checkUserEmail) {
             $this->error('User already exist');
+
             return false;
         }
 
@@ -47,9 +49,8 @@ class CreateDevUserCommand extends Command
         return self::SUCCESS;
     }
 
-    function checkValidation(): \Illuminate\Contracts\Validation\Validator
+    public function checkValidation(): \Illuminate\Contracts\Validation\Validator
     {
-
         return Validator::make([
             'name' => $this->developerName,
             'email' => $this->email,
@@ -59,7 +60,6 @@ class CreateDevUserCommand extends Command
             'email' => ['required', 'email'],
             'password' => ['required', 'min:8'],
         ]);
-
     }
 
     /**
@@ -74,7 +74,7 @@ class CreateDevUserCommand extends Command
             "email" => $this->email,
             "name" => $this->developerName,
             "password" => $this->password,
-            "remember_me" => ""
+            "remember_me" => "",
         ];
 
         $data = var_export($arr, 1);
