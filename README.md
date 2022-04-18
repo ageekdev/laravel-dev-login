@@ -36,7 +36,7 @@ php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProv
 
 ## Setup developer account
 
-setup dev user account set up.
+Setup new dev user account.
 
 ```bash
 php artisan dev:user
