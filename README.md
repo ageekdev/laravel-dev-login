@@ -23,7 +23,7 @@ The package will automatically register itself.
 
 Publish configuration and asset files
 ```bash
-php artisan vendor:publish --provider="GenieFintech\Num\NumServiceProvider"
+php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider"
 ```
 
 ## Setup developer account
