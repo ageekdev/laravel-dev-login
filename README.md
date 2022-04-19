@@ -19,7 +19,7 @@ The package will automatically register itself.
 
 Publish configuration and asset files
 ```bash
-php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider"
+php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-config
 ```
 
 ## Setup developer account

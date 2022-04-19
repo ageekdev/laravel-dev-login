@@ -4,6 +4,7 @@ namespace GenieFintech\DevLogin\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class CreateDevUserCommand extends Command
@@ -18,6 +19,11 @@ class CreateDevUserCommand extends Command
 
     public function handle(): int
     {
+        if (!File::exists(config_path('dev-login.php'))) {
+            $this->error('please run php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-config');
+            return self::INVALID;
+        }
+
         $this->takeInput();
 
         $validator = $this->checkValidation();
@@ -108,7 +114,7 @@ class CreateDevUserCommand extends Command
         return join(PHP_EOL, $array);
     }
 
-    private function removeArrayIndex(int $count, String $context): string
+    private function removeArrayIndex(int $count, string $context): string
     {
         for ($x = 0; $x <= $count; $x++) {
             $context = str_replace("$x => [", "[", $context);
