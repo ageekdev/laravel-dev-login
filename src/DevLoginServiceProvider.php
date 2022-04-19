@@ -12,7 +12,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class DevLoginServiceProvider extends PackageServiceProvider
 {
-
     public function bootingPackage()
     {
         $this->registerRoutes();
@@ -20,8 +19,8 @@ class DevLoginServiceProvider extends PackageServiceProvider
 
     public function packageBooted()
     {
-        $provider_driver = config('dev-login.auth.provider_driver','config_user');
-        $guard_name = config('dev-login.auth.guard_name','developer');
+        $provider_driver = config('dev-login.auth.provider_driver', 'config_user');
+        $guard_name = config('dev-login.auth.guard_name', 'developer');
 
         Config::set('auth.guards.' . $guard_name, [
             'driver' => 'session',
@@ -32,7 +31,7 @@ class DevLoginServiceProvider extends PackageServiceProvider
         ]);
 
         Auth::provider($provider_driver, function ($app, array $config) {
-            return new ConfigUserProvider(config('dev-login.users',[]));
+            return new ConfigUserProvider(config('dev-login.users', []));
         });
     }
 
