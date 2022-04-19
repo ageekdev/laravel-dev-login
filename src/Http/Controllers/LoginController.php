@@ -10,5 +10,8 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected string $redirectTo = DevLoginServiceProvider::HOME;
+    protected function redirectTo()
+    {
+        return config('dev-login.home', '/dev/home');
+    }
 }
