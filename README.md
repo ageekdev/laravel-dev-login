@@ -1,7 +1,7 @@
 <h1 align="center">Laravel Developer Login</h1>
 
-[![Laravel 8.x](https://img.shields.io/badge/Laravel-8.x-red.svg?style=flat-square)](http://laravel.com)
-[![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](http://laravel.com)
+[![Laravel 8.x](https://img.shields.io/badge/Laravel-8.x-red.svg?style=flat-square)](https://laravel.com/docs/8.x)
+[![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](https://laravel.com/docs/9.x)
 [![PHP 8.x](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)](https://www.php.net/releases/8.0/en.php)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/genie-fintech/laravel-dev-login/run-tests?label=tests&style=flat-square)](https://github.com/genie-fintech/dev-login/actions?query=workflow%3Arun-tests+branch%3Amain)
 
@@ -17,9 +17,20 @@ composer require genie-fintech/dev-login
 
 The package will automatically register itself.
 
-Publish configuration and asset files
+## Edit configuration
+
+Publish dev-login.php configuration file into /config/ for configuration customization:
+
 ```bash
 php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-config
+```
+
+## Customize view
+
+Publish into /resources/views/vendor/dev-login for view customization:
+
+```bash
+php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-views 
 ```
 
 ## Setup developer account
