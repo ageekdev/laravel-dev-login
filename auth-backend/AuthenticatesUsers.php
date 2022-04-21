@@ -177,7 +177,7 @@ trait AuthenticatesUsers
 
         return $request->wantsJson()
             ? new JsonResponse([], 204)
-            : redirect()->route('login');
+            : redirect()->route('dev-login.login');
     }
 
     /**
