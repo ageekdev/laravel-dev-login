@@ -45,13 +45,13 @@ php artisan dev:user
 
 Dev Login default login URI is the `/dev/login`.
 
-
 ### UseDevLoginGuard Middleware
 
 Laravel official packages uses `$request->user()` to get the user in gate. The default guard is `user` guard. So You can use UseDevLoginGuard middleware to override this behaviour.
 
-###  Telescope
-### Add UseDevLoginGuard Middleware
+### Telescope
+
+#### Add UseDevLoginGuard Middleware
 You must define `UseDevLoginGuard` middleware applied to Telescope routes in telescope.middleware config value. `UseDevLoginGuard` middleware will override the default guard in telescope routes.
 
 `config/telescope.php`
@@ -72,7 +72,8 @@ use Laravel\Telescope\Watchers;
 
 ...
 ```
-### Add Dev Users
+
+#### Add Dev Users
 
 After you added `UseDevLoginGuard` middleware, you can add all of the dev users. Within your `app/Providers/TelescopeServiceProvider.php` file, there is an authorization gate definition.
 You need to add `dev_user_emails()` helper function in `TelescopeServiceProvider`.
