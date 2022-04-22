@@ -22,7 +22,7 @@ The package will automatically register itself.
 Publish dev-login.php configuration file into /config/ for configuration customization:
 
 ```bash
-php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-config
+php artisan vendor:publish --tag=dev-login-config
 ```
 
 ## Customize view
@@ -30,7 +30,7 @@ php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProv
 Publish into /resources/views/vendor/dev-login for view customization:
 
 ```bash
-php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-views 
+php artisan vendor:publish --tag=dev-login-views 
 ```
 
 ## Setup developer account
@@ -43,7 +43,49 @@ php artisan dev:user
 
 ## USAGE
 
-`http://example.test/dev/login` type in url bar. should see the login page. type email and password
+Dev Login default login URI is the `/dev/login`.
+
+
+### UseDevLoginGuard Middleware
+
+Laravel official packages uses `$request->user()` to get the user in gate. The default guard is `user` guard. So You can use UseDevLoginGuard middleware to override this behaviour.
+
+###  Telescope
+### Add UseDevLoginGuard Middleware
+You must define `UseDevLoginGuard` middleware applied to Telescope routes in telescope.middleware config value. `UseDevLoginGuard` middleware will override the default guard in telescope routes.
+
+`config/telescope.php`
+```php
+<?php
+
+use Laravel\Telescope\Http\Middleware\Authorize;
+use GenieFintech\DevLogin\Http\Middleware\UseDevLoginGuard;
+use Laravel\Telescope\Watchers;
+
+...
+
+'middleware' => [
+   'web',
+    UseDevLoginGuard::class,
+    Authorize::class,
+],
+
+...
+```
+### Add Dev Users
+
+After you added `UseDevLoginGuard` middleware, you can add all of the dev users. Within your `app/Providers/TelescopeServiceProvider.php` file, there is an authorization gate definition.
+You need to add `dev_user_emails()` helper function in `TelescopeServiceProvider`.
+
+`app/Providers/TelescopeServiceProvider.php`
+```php
+protected function gate()
+{
+    Gate::define('viewTelescope', function ($user) {
+        return in_array($user->email, dev_user_emails());
+    });
+}
+```
 
 ## Testing
 
