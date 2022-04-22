@@ -47,7 +47,10 @@
     "autoload-dev": {
         "psr-4": {
             "GenieFintech\\DevLogin\\Tests\\": "tests"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
