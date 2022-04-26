@@ -5,7 +5,7 @@ use function Pest\Laravel\post;
 it('can authenticate a user', function ($email, $password) {
     post('dev/login', [
         'email' => $email,
-        'password' => $password,
+        'password' => '12345678',
 
     ])->assertSessionHasNoErrors();
 })->with('logins');
