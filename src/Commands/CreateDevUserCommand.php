@@ -5,6 +5,7 @@ namespace GenieFintech\DevLogin\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class CreateDevUserCommand extends Command
@@ -82,7 +83,7 @@ class CreateDevUserCommand extends Command
             "id" => uniqid(),
             "email" => $this->email,
             "name" => $this->developerName,
-            "password" => $this->password,
+            "password" => Hash::make($this->password),
             "remember_me" => "",
         ];
 

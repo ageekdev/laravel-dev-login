@@ -5,6 +5,7 @@ namespace GenieFintech\DevLogin\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Json File based user storage retrieval
@@ -81,8 +82,7 @@ class ConfigUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        $filteredUser = $this->user_data->where('email', $credentials['email'])
-            ->where('password', $credentials['password'])->first();
+        $filteredUser = $this->user_data->where('email', $credentials['email'])->first();
 
         if ($filteredUser) {
             return $this->getGenericUser($filteredUser);
@@ -99,7 +99,7 @@ class ConfigUserProvider implements UserProvider
      */
     protected function getGenericUser(mixed $user): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        if (! is_null($user)) {
+        if (!is_null($user)) {
             return new ConfigUserAuthenticatable((array)$user);
         }
 
@@ -115,6 +115,11 @@ class ConfigUserProvider implements UserProvider
      */
     public function validateCredentials(Authenticatable $user, array $credentials): bool
     {
-        return $credentials['password'] === $user->getAuthPassword();
+        if (Hash::check($credentials['password'], $user->getAuthPassword())) {
+
+            return true;
+        }
+        return false;
+//        return $credentials['password'] === $user->getAuthPassword();
     }
 }
