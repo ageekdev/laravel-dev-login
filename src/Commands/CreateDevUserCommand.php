@@ -19,10 +19,9 @@ class CreateDevUserCommand extends Command
 
     public $description = 'Create Developer User';
 
-
     public function handle(): int
     {
-        if (!File::exists(config_path('dev-login.php'))) {
+        if (! File::exists(config_path('dev-login.php'))) {
             $this->error('please run php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-config');
 
             return self::INVALID;
