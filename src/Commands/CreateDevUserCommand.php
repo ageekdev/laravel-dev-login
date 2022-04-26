@@ -13,14 +13,16 @@ class CreateDevUserCommand extends Command
     protected string $email;
     protected string $developerName;
     protected string $password;
+    protected string $password_confirmation;
 
     public $signature = 'dev:user';
 
     public $description = 'Create Developer User';
 
+
     public function handle(): int
     {
-        if (! File::exists(config_path('dev-login.php'))) {
+        if (!File::exists(config_path('dev-login.php'))) {
             $this->error('please run php artisan vendor:publish --provider="GenieFintech\DevLogin\DevLoginServiceProvider" --tag=dev-login-config');
 
             return self::INVALID;
@@ -64,10 +66,12 @@ class CreateDevUserCommand extends Command
             'name' => $this->developerName,
             'email' => $this->email,
             'password' => $this->password,
+            'password_confirmation' => $this->password_confirmation,
         ], [
             'name' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:8'],
+            'password' => ['required', 'confirmed', 'min:8'],
+            'password_confirmation' => ['required', 'same:password', 'min:8'],
         ]);
     }
 
@@ -100,6 +104,7 @@ class CreateDevUserCommand extends Command
         $this->email = $this->ask('Login Email?');
         $this->developerName = $this->ask('Developer Name?');
         $this->password = $this->secret('Password');
+        $this->password_confirmation = $this->secret('Password Confirmation');
     }
 
     private function varExport(array $context): string
