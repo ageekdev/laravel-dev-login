@@ -99,7 +99,7 @@ class ConfigUserProvider implements UserProvider
      */
     protected function getGenericUser(mixed $user): ?\GenieFintech\DevLogin\Auth\ConfigUserAuthenticatable
     {
-        if (!is_null($user)) {
+        if (! is_null($user)) {
             return new ConfigUserAuthenticatable((array)$user);
         }
 
@@ -116,9 +116,9 @@ class ConfigUserProvider implements UserProvider
     public function validateCredentials(Authenticatable $user, array $credentials): bool
     {
         if (Hash::check($credentials['password'], $user->getAuthPassword())) {
-
             return true;
         }
+
         return false;
 //        return $credentials['password'] === $user->getAuthPassword();
     }
