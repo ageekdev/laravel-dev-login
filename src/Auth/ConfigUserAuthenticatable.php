@@ -2,27 +2,13 @@
 
 namespace GenieFintech\DevLogin\Auth;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-
-class ConfigUserAuthenticatable implements Authenticatable
-{
+trait ConfigUserAuthenticatable {
     /**
-     * All of the user's attributes.
+     * The column name of the "remember me" token.
      *
-     * @var array
+     * @var string
      */
-    public array $attributes;
-
-    /**
-     * Create a new generic User object.
-     *
-     * @param  array  $attributes
-     * @return void
-     */
-    public function __construct(array $attributes)
-    {
-        $this->attributes = $attributes;
-    }
+    protected $rememberTokenName = 'remember_token';
 
     /**
      * Get the name of the unique identifier for the user.
@@ -31,7 +17,7 @@ class ConfigUserAuthenticatable implements Authenticatable
      */
     public function getAuthIdentifierName(): string
     {
-        return 'id';
+        return $this->getKeyName();
     }
 
     /**
@@ -41,7 +27,7 @@ class ConfigUserAuthenticatable implements Authenticatable
      */
     public function getAuthIdentifier(): mixed
     {
-        return $this->attributes[$this->getAuthIdentifierName()];
+        return $this->{$this->getAuthIdentifierName()};
     }
 
     /**
@@ -51,28 +37,34 @@ class ConfigUserAuthenticatable implements Authenticatable
      */
     public function getAuthPassword(): string
     {
-        return $this->attributes['password'];
+        return $this->password;
     }
 
     /**
-     * Get the "remember me" token value.
+     * Get the token value for the "remember me" session.
      *
-     * @return string
+     * @return string|null
      */
-    public function getRememberToken(): string
+    public function getRememberToken(): ?string
     {
-        return $this->attributes[$this->getRememberTokenName()];
+        if (! empty($this->getRememberTokenName())) {
+            return (string) $this->{$this->getRememberTokenName()};
+        }
+
+        return null;
     }
 
     /**
-     * Set the "remember me" token value.
+     * Set the token value for the "remember me" session.
      *
      * @param  string  $value
      * @return void
      */
-    public function setRememberToken($value)
+    public function setRememberToken($value): void
     {
-        $this->attributes[$this->getRememberTokenName()] = $value;
+        if (! empty($this->getRememberTokenName())) {
+            $this->{$this->getRememberTokenName()} = $value;
+        }
     }
 
     /**
@@ -82,51 +74,6 @@ class ConfigUserAuthenticatable implements Authenticatable
      */
     public function getRememberTokenName(): string
     {
-        return 'remember_me';
-    }
-
-    /**
-     * Dynamically access the user's attributes.
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function __get(string $key)
-    {
-        return $this->attributes[$key];
-    }
-
-    /**
-     * Dynamically set an attribute on the user.
-     *
-     * @param string $key
-     * @param  mixed  $value
-     * @return void
-     */
-    public function __set(string $key, mixed $value)
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    /**
-     * Dynamically check if a value is set on the user.
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function __isset(string $key)
-    {
-        return isset($this->attributes[$key]);
-    }
-
-    /**
-     * Dynamically unset a value on the user.
-     *
-     * @param string $key
-     * @return void
-     */
-    public function __unset(string $key)
-    {
-        unset($this->attributes[$key]);
+        return $this->rememberTokenName;
     }
 }
