@@ -2,7 +2,8 @@
 
 namespace GenieFintech\DevLogin\Auth;
 
-trait ConfigUserAuthenticatable {
+trait ConfigUserAuthenticatable
+{
     /**
      * The column name of the "remember me" token.
      *

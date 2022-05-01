@@ -10,7 +10,8 @@ class DevUser extends Model implements
     AuthenticatableContract,
     AuthorizableContract
 {
-    use ConfigUserAuthenticatable, Authorizable;
+    use ConfigUserAuthenticatable;
+    use Authorizable;
 
     public $timestamps = false;
 
