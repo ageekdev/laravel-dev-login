@@ -11,16 +11,15 @@ use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
 use Illuminate\Database\Eloquent\MassAssignmentException;
-use Illuminate\Support\Str;
 use JsonSerializable;
 
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
-    use HasAttributes,
-        HasEvents,
-        HasTimestamps,
-        HidesAttributes,
-        GuardsAttributes;
+    use HasAttributes;
+    use HasEvents;
+    use HasTimestamps;
+    use HidesAttributes;
+    use GuardsAttributes;
 
     /**
      * The primary key for the model.
@@ -222,7 +221,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
             } elseif ($totallyGuarded) {
                 throw new MassAssignmentException(sprintf(
                     'Add [%s] to fillable property to allow mass assignment on [%s].',
-                    $key, get_class($this)
+                    $key,
+                    get_class($this)
                 ));
             }
         }
@@ -523,7 +523,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      */
     public static function __callStatic(string $method, array $parameters)
     {
-        return (new static)->$method(...$parameters);
+        return (new static())->$method(...$parameters);
     }
 
     /**
