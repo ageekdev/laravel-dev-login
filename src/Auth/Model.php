@@ -10,9 +10,13 @@ use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HidesAttributes;
+use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use JsonSerializable;
 
+/**
+ * @property bool $incrementing
+ */
 abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializable
 {
     use HasAttributes;
@@ -50,6 +54,13 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     protected bool $escapeWhenCastingToString = false;
 
     /**
+     * The loaded relationships for the model.
+     *
+     * @var array
+     */
+    protected array $relations = [];
+
+    /**
      * The event dispatcher instance.
      *
      * @var \Illuminate\Contracts\Events\Dispatcher
@@ -83,7 +94,7 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
      * @param  array  $attributes
      * @return void
      */
-    public function __construct(array $attributes = [])
+    final public function __construct(array $attributes = [])
     {
         $this->bootIfNotBooted();
 
@@ -315,16 +326,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     }
 
     /**
-     * Get the table qualified key name.
-     *
-     * @return string
-     */
-    public function getQualifiedKeyName()
-    {
-        return $this->qualifyColumn($this->getKeyName());
-    }
-
-    /**
      * Get the auto-incrementing key type.
      *
      * @return string
@@ -388,16 +389,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     public function getQueueableId()
     {
         return $this->getKey();
-    }
-
-    /**
-     * Get the queueable connection for the entity.
-     *
-     * @return string|null
-     */
-    public function getQueueableConnection()
-    {
-        return $this->getConnectionName();
     }
 
     /**
