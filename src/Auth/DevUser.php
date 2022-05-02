@@ -6,6 +6,12 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
+/**
+ * @property-read string $email
+ * @property-read string $password
+ * @property-read string $name
+ * @property-read bool $remember_me
+ */
 class DevUser extends Model implements
     AuthenticatableContract,
     AuthorizableContract

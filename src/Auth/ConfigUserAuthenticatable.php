@@ -2,6 +2,9 @@
 
 namespace GenieFintech\DevLogin\Auth;
 
+/**
+ * @mixin \GenieFintech\DevLogin\Auth\DevUser
+ */
 trait ConfigUserAuthenticatable
 {
     /**

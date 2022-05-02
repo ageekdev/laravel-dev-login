@@ -82,8 +82,7 @@ class ConfigUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials): ?DevUser
     {
-        $filteredUser = $this->user_data->where('email', $credentials['email'])
-            ->where('password', $credentials['password'])->first();
+        $filteredUser = $this->user_data->where('email', $credentials['email'])->first();
 
         if ($filteredUser) {
             return $this->getGenericUser($filteredUser);
