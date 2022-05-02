@@ -66,8 +66,7 @@ use Laravel\Telescope\Watchers;
 
 'middleware' => [
    'web',
-    UseDevLoginGuard::class,
-    Authorize::class,
+    UseDevLoginGuard::class
 ],
 
 ...
