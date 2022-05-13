@@ -1,9 +1,11 @@
 <h1 align="center">Laravel Developer Login</h1>
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ageekdev/dev-login.svg?style=flat-square)](https://packagist.org/packages/ageekdev/dev-login)
 [![Laravel 8.x](https://img.shields.io/badge/Laravel-8.x-red.svg?style=flat-square)](https://laravel.com/docs/8.x)
 [![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](https://laravel.com/docs/9.x)
 [![PHP 8.x](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)](https://www.php.net/releases/8.0/en.php)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/ageekdev/laravel-dev-login/run-tests?label=tests&style=flat-square)](https://github.com/ageekdev/laravel-dev-login/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/ageekdev/dev-login.svg?style=flat-square)](https://packagist.org/packages/ageekdev/dev-login)
 
 This package allows you to login the developer associate actions (e.g.log views).
 
