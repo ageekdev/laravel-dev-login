@@ -15,6 +15,9 @@ class CreateDevUserCommand extends Command
     protected string $password;
     protected string $password_confirmation;
 
+    protected string $emptyPattern = "/[\"\']+users[\"\']\s+\=>\s+\[([\s\S]*?)\],/";
+    protected string $pattern = "/[\"']+users[\"']\s+=>\s+\[+([\s\S])+(?<=id|email|name|password|remember_token)+([\s\S])+(?<='|',)+(\n\s+|\n|\s+|)+(],|])+(\n\s+],|\n],|\s+],|\n\s+]|\n]|\s+])/";
+
     public $signature = 'dev:user';
 
     public $description = 'Create Developer User';
@@ -82,17 +85,22 @@ class CreateDevUserCommand extends Command
      */
     public function insertDeveloper(array $arr, string $path): void
     {
-        $arr['users'][] = [
+        $users = $arr['users'];
+        $users[] = [
             "id" => uniqid(),
             "email" => $this->email,
             "name" => $this->developerName,
             "password" => Hash::make($this->password),
             "remember_token" => "",
         ];
+        $data["users"] = $users;
 
-        $data = $this->varExport($arr);
-        $data = $this->removeArrayIndex(count($arr), $data);
-        file_put_contents($path, "<?php\nreturn $data;");
+        $data = $this->varExport($data);
+        $data = $this->replaceArrayIndex(count($arr), $data);
+        $data = $this->removeParentArray($data);
+        $data = $this->replaceUsersString(empty($arr['users']) , $data,file_get_contents($path));
+
+        file_put_contents($path, $data);
     }
 
     /**
@@ -106,6 +114,13 @@ class CreateDevUserCommand extends Command
         $this->password_confirmation = $this->secret('Password Confirmation');
     }
 
+    /**
+     * Rewrite like php var_export function.
+     * Replace with shortened array syntax.
+     *
+     * @param array $context
+     * @return string
+     */
     private function varExport(array $context): string
     {
         $export = var_export($context, true);
@@ -120,12 +135,44 @@ class CreateDevUserCommand extends Command
         return join(PHP_EOL, $array);
     }
 
-    private function removeArrayIndex(int $count, string $context): string
+    /**
+     * Replace the array index. (eg. `1 => [` replace with `[`)
+     *
+     * @param int $count
+     * @param string $context
+     * @return string
+     */
+    private function replaceArrayIndex(int $count, string $context): string
     {
         for ($x = 0; $x <= $count; $x++) {
             $context = str_replace("$x => [", "[", $context);
         }
 
         return $context;
+    }
+
+    /**
+     * Remove parent array scope.
+     *
+     * @param string $context
+     * @return string
+     */
+    private function removeParentArray(string $context): string
+    {
+        preg_match($this->pattern, $context, $result);
+        return data_get($result,'0');
+    }
+
+    /**
+     * Replace with new users string.
+     *
+     * @param bool $isEmptyPattern
+     * @param string $replace
+     * @param string $context
+     * @return string
+     */
+    private function replaceUsersString(bool $isEmptyPattern, string $replace, string $context): string
+    {
+        return preg_replace($isEmptyPattern ? $this->emptyPattern : $this->pattern, $replace, $context);
     }
 }
