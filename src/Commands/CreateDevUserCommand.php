@@ -98,7 +98,7 @@ class CreateDevUserCommand extends Command
         $data = $this->varExport($data);
         $data = $this->replaceArrayIndex(count($arr), $data);
         $data = $this->removeParentArray($data);
-        $data = $this->replaceUsersString(empty($arr['users']) , $data,file_get_contents($path));
+        $data = $this->replaceUsersString(empty($arr['users']), $data, file_get_contents($path));
 
         file_put_contents($path, $data);
     }
@@ -160,7 +160,8 @@ class CreateDevUserCommand extends Command
     private function removeParentArray(string $context): string
     {
         preg_match($this->pattern, $context, $result);
-        return data_get($result,'0');
+
+        return data_get($result, '0');
     }
 
     /**
