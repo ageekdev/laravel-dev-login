@@ -1,9 +1,9 @@
 <?php
 
-namespace GenieFintech\DevLogin\Auth;
+namespace AgeekDev\DevLogin\Auth;
 
 /**
- * @mixin \GenieFintech\DevLogin\Auth\DevUser
+ * @mixin \AgeekDev\DevLogin\Auth\DevUser
  */
 trait ConfigUserAuthenticatable
 {

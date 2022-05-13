@@ -1,6 +1,6 @@
 <?php
 
-namespace GenieFintech\DevLogin\Auth;
+namespace AgeekDev\DevLogin\Auth;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;

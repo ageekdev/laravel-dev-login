@@ -1,6 +1,6 @@
 <?php
 
-namespace GenieFintech\DevLogin\Auth;
+namespace AgeekDev\DevLogin\Auth;
 
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Cache\RateLimiter;

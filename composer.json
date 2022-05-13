@@ -1,5 +1,5 @@
 {
-    "name": "genie-fintech/dev-login",
+    "name": "ageekdev/dev-login",
     "description": "Developer Login for Laravel",
     "keywords": [
         "gennie-fintech",
@@ -9,7 +9,7 @@
         "developer-login",
         "developer-auth"
     ],
-    "homepage": "https://github.com/genie-fintech/dev-login",
+    "homepage": "https://github.com/ageekdev/laravel-dev-login",
     "license": "MIT",
     "authors": [
         {
@@ -40,13 +40,13 @@
     },
     "autoload": {
         "psr-4": {
-            "GenieFintech\\DevLogin\\": "src",
-            "GenieFintech\\DevLogin\\Auth\\": "auth-backend/"
+            "AgeekDev\\DevLogin\\": "src",
+            "AgeekDev\\DevLogin\\Auth\\": "auth-backend/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "GenieFintech\\DevLogin\\Tests\\": "tests"
+            "AgeekDev\\DevLogin\\Tests\\": "tests"
         },
         "files": [
             "src/helpers.php"
@@ -67,7 +67,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "GenieFintech\\DevLogin\\DevLoginServiceProvider"
+                "AgeekDev\\DevLogin\\DevLoginServiceProvider"
             ]
         }
     },
