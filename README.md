@@ -51,40 +51,48 @@ Laravel official packages uses `$request->user()` to get the user in gate. The d
 
 ### Telescope
 
-#### Add UseDevLoginGuard Middleware
-You must define `UseDevLoginGuard` middleware applied to Telescope routes in telescope.middleware config value. `UseDevLoginGuard` middleware will override the default guard in telescope routes.
+You must replace `Authorize` with `UseDevLoginGuard` middleware applied to Telescope routes in telescope.middleware config value.
 
 `config/telescope.php`
-```php
+```diff
 <?php
 
-use Laravel\Telescope\Http\Middleware\Authorize;
-use GenieFintech\DevLogin\Http\Middleware\UseDevLoginGuard;
+- use Laravel\Telescope\Http\Middleware\Authorize;
++ use GenieFintech\DevLogin\Http\Middleware\UseDevLoginGuard;
 use Laravel\Telescope\Watchers;
 
 ...
 
 'middleware' => [
    'web',
-    UseDevLoginGuard::class
+-   Authorize::class,
++   UseDevLoginGuard::class,
 ],
 
 ...
 ```
 
-#### Add Dev Users
+### Vapor UI
 
-After you added `UseDevLoginGuard` middleware, you can add all of the dev users. Within your `app/Providers/TelescopeServiceProvider.php` file, there is an authorization gate definition.
-You need to add `dev_user_emails()` helper function in `TelescopeServiceProvider`.
+You must replace `EnsureUserIsAuthorized` with `UseDevLoginGuard` middleware applied to Vapor routes in vapor-ui.middleware config value.
 
-`app/Providers/TelescopeServiceProvider.php`
-```php
-protected function gate()
-{
-    Gate::define('viewTelescope', function ($user) {
-        return in_array($user->email, dev_user_emails());
-    });
-}
+`config/vapor-ui.php`
+```diff
+<?php
+
+- use Laravel\VaporUi\Http\Middleware\EnsureUserIsAuthorized;
++ use GenieFintech\DevLogin\Http\Middleware\UseDevLoginGuard;
+use Laravel\Telescope\Watchers;
+
+...
+
+'middleware' => [
+   'web',
+-   EnsureUserIsAuthorized::class,
++   UseDevLoginGuard::class,
+],
+
+...
 ```
 
 ## Testing

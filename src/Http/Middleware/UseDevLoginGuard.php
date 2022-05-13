@@ -18,6 +18,10 @@ class UseDevLoginGuard
     {
         auth()->setDefaultDriver(config('dev-login.auth.guard_name'));
 
+        if (app()->environment('local')) {
+            return $next($request);
+        }
+
         if (! auth(config('dev-login.auth.guard_name'))->user()) {
             abort(403);
         }
