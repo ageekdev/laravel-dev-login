@@ -1,6 +1,6 @@
 <?php
 
-namespace GenieFintech\DevLogin\Auth;
+namespace AgeekDev\DevLogin\Auth;
 
 trait RedirectsUsers
 {

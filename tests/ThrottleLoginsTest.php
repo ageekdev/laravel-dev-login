@@ -1,6 +1,6 @@
 <?php
 
-use GenieFintech\DevLogin\Auth\ThrottlesLogins;
+use AgeekDev\DevLogin\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 
 it('it_can_generate_throttle_key', function () {

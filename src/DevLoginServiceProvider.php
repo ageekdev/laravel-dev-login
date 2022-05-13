@@ -1,9 +1,9 @@
 <?php
 
-namespace GenieFintech\DevLogin;
+namespace AgeekDev\DevLogin;
 
-use GenieFintech\DevLogin\Auth\ConfigUserProvider;
-use GenieFintech\DevLogin\Commands\CreateDevUserCommand;
+use AgeekDev\DevLogin\Auth\ConfigUserProvider;
+use AgeekDev\DevLogin\Commands\CreateDevUserCommand;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;

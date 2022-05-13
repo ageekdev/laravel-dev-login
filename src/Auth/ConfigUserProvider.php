@@ -1,6 +1,6 @@
 <?php
 
-namespace GenieFintech\DevLogin\Auth;
+namespace AgeekDev\DevLogin\Auth;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;

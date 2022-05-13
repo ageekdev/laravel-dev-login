@@ -1,8 +1,8 @@
 <?php
 
-namespace GenieFintech\DevLogin\Http\Controllers;
+namespace AgeekDev\DevLogin\Http\Controllers;
 
-use GenieFintech\DevLogin\Auth\AuthenticatesUsers;
+use AgeekDev\DevLogin\Auth\AuthenticatesUsers;
 use Illuminate\Routing\Controller;
 
 class LoginController extends Controller

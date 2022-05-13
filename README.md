@@ -3,7 +3,7 @@
 [![Laravel 8.x](https://img.shields.io/badge/Laravel-8.x-red.svg?style=flat-square)](https://laravel.com/docs/8.x)
 [![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](https://laravel.com/docs/9.x)
 [![PHP 8.x](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)](https://www.php.net/releases/8.0/en.php)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/genie-fintech/laravel-dev-login/run-tests?label=tests&style=flat-square)](https://github.com/genie-fintech/dev-login/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/ageekdev/laravel-dev-login/run-tests?label=tests&style=flat-square)](https://github.com/ageekdev/dev-login/actions?query=workflow%3Arun-tests+branch%3Amain)
 
 This package allows you to login the developer associate actions (e.g.log views).
 
@@ -12,7 +12,7 @@ This package allows you to login the developer associate actions (e.g.log views)
 You can install this package via composer using this command:
 
 ```bash
-composer require genie-fintech/dev-login
+composer require ageekdev/dev-login
 ```
 
 The package will automatically register itself.
@@ -58,7 +58,7 @@ You must replace `Authorize` with `UseDevLoginGuard` middleware applied to Teles
 <?php
 
 - use Laravel\Telescope\Http\Middleware\Authorize;
-+ use GenieFintech\DevLogin\Http\Middleware\UseDevLoginGuard;
++ use AgeekDev\DevLogin\Http\Middleware\UseDevLoginGuard;
 use Laravel\Telescope\Watchers;
 
 ...
@@ -81,7 +81,7 @@ You must replace `EnsureUserIsAuthorized` with `UseDevLoginGuard` middleware app
 <?php
 
 - use Laravel\VaporUi\Http\Middleware\EnsureUserIsAuthorized;
-+ use GenieFintech\DevLogin\Http\Middleware\UseDevLoginGuard;
++ use AgeekDev\DevLogin\Http\Middleware\UseDevLoginGuard;
 use Laravel\Telescope\Watchers;
 
 ...

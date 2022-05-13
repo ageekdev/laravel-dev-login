@@ -1,9 +1,9 @@
 <?php
 
-namespace GenieFintech\DevLogin\Tests;
+namespace AgeekDev\DevLogin\Tests;
 
-use GenieFintech\DevLogin\Auth\AuthenticatesUsers;
-use GenieFintech\DevLogin\DevLoginServiceProvider;
+use AgeekDev\DevLogin\Auth\AuthenticatesUsers;
+use AgeekDev\DevLogin\DevLoginServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Pipeline;
 use Illuminate\Support\Facades\Auth;

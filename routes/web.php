@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use GenieFintech\DevLogin\Http\Controllers\LoginController;
+use AgeekDev\DevLogin\Http\Controllers\LoginController;
 
 Route::middleware('web')
     ->group(function () {

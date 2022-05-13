@@ -1,6 +1,6 @@
 <?php
 
-namespace GenieFintech\DevLogin\Http\Middleware;
+namespace AgeekDev\DevLogin\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
