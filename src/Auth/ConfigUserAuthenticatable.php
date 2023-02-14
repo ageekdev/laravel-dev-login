@@ -3,7 +3,7 @@
 namespace AgeekDev\DevLogin\Auth;
 
 /**
- * @mixin \AgeekDev\DevLogin\Auth\DevUser
+ * @mixin DevUser
  */
 trait ConfigUserAuthenticatable
 {
@@ -12,7 +12,7 @@ trait ConfigUserAuthenticatable
      *
      * @var string
      */
-    protected $rememberTokenName = 'remember_token';
+    protected string $rememberTokenName = 'remember_token';
 
     /**
      * Get the name of the unique identifier for the user.
@@ -26,8 +26,6 @@ trait ConfigUserAuthenticatable
 
     /**
      * Get the unique identifier for the user.
-     *
-     * @return mixed
      */
     public function getAuthIdentifier(): mixed
     {
@@ -36,8 +34,6 @@ trait ConfigUserAuthenticatable
 
     /**
      * Get the password for the user.
-     *
-     * @return string
      */
     public function getAuthPassword(): string
     {
@@ -46,8 +42,6 @@ trait ConfigUserAuthenticatable
 
     /**
      * Get the token value for the "remember me" session.
-     *
-     * @return string|null
      */
     public function getRememberToken(): ?string
     {
@@ -60,9 +54,6 @@ trait ConfigUserAuthenticatable
 
     /**
      * Set the token value for the "remember me" session.
-     *
-     * @param  string  $value
-     * @return void
      */
     public function setRememberToken($value): void
     {
@@ -73,8 +64,6 @@ trait ConfigUserAuthenticatable
 
     /**
      * Get the column name for the "remember me" token.
-     *
-     * @return string
      */
     public function getRememberTokenName(): string
     {

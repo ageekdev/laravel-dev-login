@@ -11,11 +11,15 @@ use Illuminate\Support\Facades\Validator;
 class CreateDevUserCommand extends Command
 {
     protected string $email;
+
     protected string $developerName;
+
     protected string $password;
+
     protected string $password_confirmation;
 
     protected string $emptyPattern = "/[\"\']+users[\"\']\s+\=>\s+\[([\s\S]*?)\],/";
+
     protected string $pattern = "/[\"']+users[\"']\s+=>\s+\[+([\s\S])+(?<=id|email|name|password|remember_token)+([\s\S])+(?<='|',)+(\n\s+|\n|\s+|)+(],|])+(\n\s+],|\n],|\s+],|\n\s+]|\n]|\s+])/";
 
     public $signature = 'dev:user';
@@ -78,22 +82,21 @@ class CreateDevUserCommand extends Command
     }
 
     /**
-     * @param array $arr
-     * @param string $path
-     *
+     * @param  array  $arr
+     * @param  string  $path
      * @return void
      */
     public function insertDeveloper(array $arr, string $path): void
     {
         $users = $arr['users'];
         $users[] = [
-            "id" => uniqid(),
-            "email" => $this->email,
-            "name" => $this->developerName,
-            "password" => Hash::make($this->password),
-            "remember_token" => "",
+            'id' => uniqid('', true),
+            'email' => $this->email,
+            'name' => $this->developerName,
+            'password' => Hash::make($this->password),
+            'remember_token' => '',
         ];
-        $data["users"] = $users;
+        $data['users'] = $users;
 
         $data = $this->varExport($data);
         $data = $this->replaceArrayIndex(count($arr), $data);
@@ -103,9 +106,6 @@ class CreateDevUserCommand extends Command
         file_put_contents($path, $data);
     }
 
-    /**
-     * @return void
-     */
     public function takeInput(): void
     {
         $this->email = $this->ask('Login Email?');
@@ -117,35 +117,28 @@ class CreateDevUserCommand extends Command
     /**
      * Rewrite like php var_export function.
      * Replace with shortened array syntax.
-     *
-     * @param array $context
-     * @return string
      */
     private function varExport(array $context): string
     {
         $export = var_export($context, true);
-        $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+        $export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
         $array = preg_split("/\r\n|\n|\r/", $export);
         $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [null, ']$1', ' => ['], $array);
 
         if (is_array($array)) {
-            $array = array_filter(["["] + $array);
+            $array = array_filter(['['] + $array);
         }
 
-        return join(PHP_EOL, $array);
+        return implode(PHP_EOL, $array);
     }
 
     /**
      * Replace the array index. (eg. `1 => [` replace with `[`)
-     *
-     * @param int $count
-     * @param string $context
-     * @return string
      */
     private function replaceArrayIndex(int $count, string $context): string
     {
         for ($x = 0; $x <= $count; $x++) {
-            $context = str_replace("$x => [", "[", $context);
+            $context = str_replace("$x => [", '[', $context);
         }
 
         return $context;
@@ -153,9 +146,6 @@ class CreateDevUserCommand extends Command
 
     /**
      * Remove parent array scope.
-     *
-     * @param string $context
-     * @return string
      */
     private function removeParentArray(string $context): string
     {
@@ -166,11 +156,6 @@ class CreateDevUserCommand extends Command
 
     /**
      * Replace with new users string.
-     *
-     * @param bool $isEmptyPattern
-     * @param string $replace
-     * @param string $context
-     * @return string
      */
     private function replaceUsersString(bool $isEmptyPattern, string $replace, string $context): string
     {

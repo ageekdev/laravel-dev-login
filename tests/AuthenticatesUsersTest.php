@@ -12,7 +12,7 @@ it('can authenticate a user', function ($email, $password) {
 
 it('can not authenticate a user with invalid password', function ($email, $password) {
     post('dev/login', [
-        'email' => "wrong_email",
+        'email' => 'wrong_email',
         'password' => $password,
 
     ])->assertSessionHasErrors([

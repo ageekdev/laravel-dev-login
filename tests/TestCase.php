@@ -57,8 +57,8 @@ class TestCase extends Orchestra
     {
         Config::set('dev-login.users', [
             [
-                'email' => "genie-dev@geniefintech.com",
-                'password' => "$2y$10$9czveKLJpc9ip.wyZoBdROuiaHPV5o/ldvFGSLlb3XrTibRQGfs.S",
+                'email' => 'genie-dev@geniefintech.com',
+                'password' => '$2y$10$9czveKLJpc9ip.wyZoBdROuiaHPV5o/ldvFGSLlb3XrTibRQGfs.S',
             ],
         ]);
     }

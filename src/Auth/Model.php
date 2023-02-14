@@ -27,72 +27,51 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * The primary key for the model.
-     *
-     * @var string
      */
     protected string $primaryKey = 'id';
 
     /**
      * The "type" of the primary key ID.
-     *
-     * @var string
      */
     protected string $keyType = 'string';
 
     /**
      * Indicates if the model exists.
-     *
-     * @var bool
      */
     public bool $exists = false;
 
     /**
      * Indicates that the object's string representation should be escaped when __toString is invoked.
-     *
-     * @var bool
      */
     protected bool $escapeWhenCastingToString = false;
 
     /**
      * The loaded relationships for the model.
-     *
-     * @var array
      */
     protected array $relations = [];
 
     /**
      * The event dispatcher instance.
-     *
-     * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected static \Illuminate\Contracts\Events\Dispatcher $dispatcher;
 
     /**
      * The array of booted models.
-     *
-     * @var array
      */
     protected static array $booted = [];
 
     /**
      * The array of trait initializers that will be called on each new instance.
-     *
-     * @var array
      */
     protected static array $traitInitializers = [];
 
     /**
      * The array of global scopes on the model.
-     *
-     * @var array
      */
     protected static array $globalScopes = [];
 
     /**
      * Create a new Eloquent model instance.
-     *
-     * @param  array  $attributes
-     * @return void
      */
     final public function __construct(array $attributes = [])
     {
@@ -107,8 +86,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Check if the model needs to be booted and if so, do it.
-     *
-     * @return void
      */
     protected function bootIfNotBooted(): void
     {
@@ -127,30 +104,24 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Perform any actions required before the model boots.
-     *
-     * @return void
      */
-    protected static function booting()
+    protected static function booting(): void
     {
         //
     }
 
     /**
      * Bootstrap the model and its traits.
-     *
-     * @return void
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         static::bootTraits();
     }
 
     /**
-     * Boot all of the bootable traits on the model.
-     *
-     * @return void
+     * Boot all the bootable traits on the model.
      */
-    protected static function bootTraits()
+    protected static function bootTraits(): void
     {
         $class = static::class;
 
@@ -179,10 +150,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Initialize any initializable traits on the model.
-     *
-     * @return void
      */
-    protected function initializeTraits()
+    protected function initializeTraits(): void
     {
         foreach (static::$traitInitializers[static::class] as $method) {
             $this->{$method}();
@@ -191,20 +160,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Perform any actions required after the model boots.
-     *
-     * @return void
      */
-    protected static function booted()
+    protected static function booted(): void
     {
         //
     }
 
     /**
-     * Clear the list of booted models so they will be re-booted.
-     *
-     * @return void
+     * Clear the list of booted models, so they will be re-booted.
      */
-    public static function clearBootedModels()
+    public static function clearBootedModels(): void
     {
         static::$booted = [];
 
@@ -214,12 +179,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Fill the model with an array of attributes.
      *
-     * @param  array  $attributes
-     * @return $this
-     *
      * @throws \Illuminate\Database\Eloquent\MassAssignmentException
      */
-    public function fill(array $attributes)
+    public function fill(array $attributes): static
     {
         $totallyGuarded = $this->totallyGuarded();
 
@@ -243,12 +205,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Create a new instance of the given model.
-     *
-     * @param  array  $attributes
-     * @param  bool  $exists
-     * @return static
      */
-    public function newInstance($attributes = [], $exists = false)
+    public function newInstance(array $attributes = [], bool $exists = false): static
     {
         // This method just provides a convenient way for us to generate fresh model
         // instances of this current model. It is particularly useful during the
@@ -264,10 +222,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Convert the model instance to an array.
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->attributesToArray();
     }
@@ -275,12 +231,9 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
     /**
      * Convert the model instance to JSON.
      *
-     * @param  int  $options
-     * @return string
-     *
      * @throws \Illuminate\Database\Eloquent\JsonEncodingException
      */
-    public function toJson($options = 0)
+    public function toJson($options = 0): string
     {
         $json = json_encode($this->jsonSerialize(), $options);
 
@@ -293,32 +246,25 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Convert the object into something JSON serializable.
-     *
-     * @return array
      */
     #[\ReturnTypeWillChange]
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->toArray();
     }
 
     /**
      * Get the primary key for the model.
-     *
-     * @return string
      */
-    public function getKeyName()
+    public function getKeyName(): string
     {
         return $this->primaryKey;
     }
 
     /**
      * Set the primary key for the model.
-     *
-     * @param  string  $key
-     * @return $this
      */
-    public function setKeyName($key)
+    public function setKeyName(string $key): static
     {
         $this->primaryKey = $key;
 
@@ -327,21 +273,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the auto-incrementing key type.
-     *
-     * @return string
      */
-    public function getKeyType()
+    public function getKeyType(): string
     {
         return $this->keyType;
     }
 
     /**
      * Set the data type for the primary key.
-     *
-     * @param  string  $type
-     * @return $this
      */
-    public function setKeyType($type)
+    public function setKeyType(string $type): static
     {
         $this->keyType = $type;
 
@@ -350,21 +291,16 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the value indicating whether the IDs are incrementing.
-     *
-     * @return bool
      */
-    public function getIncrementing()
+    public function getIncrementing(): bool
     {
         return $this->incrementing;
     }
 
     /**
      * Set whether IDs are incrementing.
-     *
-     * @param  bool  $value
-     * @return $this
      */
-    public function setIncrementing($value)
+    public function setIncrementing(bool $value): static
     {
         $this->incrementing = $value;
 
@@ -373,121 +309,90 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Get the value of the model's primary key.
-     *
-     * @return mixed
      */
-    public function getKey()
+    public function getKey(): mixed
     {
         return $this->getAttribute($this->getKeyName());
     }
 
     /**
      * Get the queueable identity for the entity.
-     *
-     * @return mixed
      */
-    public function getQueueableId()
+    public function getQueueableId(): mixed
     {
         return $this->getKey();
     }
 
     /**
      * Get the value of the model's route key.
-     *
-     * @return mixed
      */
-    public function getRouteKey()
+    public function getRouteKey(): mixed
     {
         return $this->getAttribute($this->getRouteKeyName());
     }
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return $this->getKeyName();
     }
 
     /**
      * Dynamically retrieve attributes on the model.
-     *
-     * @param  string  $key
-     * @return mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         return $this->getAttribute($key);
     }
 
     /**
      * Dynamically set attributes on the model.
-     *
-     * @param  string  $key
-     * @param  mixed  $value
-     * @return void
      */
-    public function __set($key, $value)
+    public function __set(string $key, mixed $value)
     {
         $this->setAttribute($key, $value);
     }
 
     /**
      * Determine if the given attribute exists.
-     *
-     * @param  mixed  $offset
-     * @return bool
      */
     #[\ReturnTypeWillChange]
-    public function offsetExists($offset)
+    public function offsetExists(mixed $offset): bool
     {
         return ! is_null($this->getAttribute($offset));
     }
 
     /**
      * Get the value for a given offset.
-     *
-     * @param  mixed  $offset
-     * @return mixed
      */
     #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->getAttribute($offset);
     }
 
     /**
      * Set the value for a given offset.
-     *
-     * @param  mixed  $offset
-     * @param  mixed  $value
-     * @return void
      */
     #[\ReturnTypeWillChange]
-    public function offsetSet($offset, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->setAttribute($offset, $value);
     }
 
     /**
      * Unset the value for a given offset.
-     *
-     * @param  mixed  $offset
-     * @return void
      */
     #[\ReturnTypeWillChange]
-    public function offsetUnset($offset)
+    public function offsetUnset(mixed $offset): void
     {
         unset($this->attributes[$offset], $this->relations[$offset]);
     }
 
     /**
      * Determine if an attribute or relation exists on the model.
-     *
-     * @param string $key
-     * @return bool
      */
     public function __isset(string $key)
     {
@@ -496,9 +401,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Unset an attribute on the model.
-     *
-     * @param string $key
-     * @return void
      */
     public function __unset(string $key)
     {
@@ -507,10 +409,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Handle dynamic static method calls into the model.
-     *
-     * @param string $method
-     * @param array $parameters
-     * @return mixed
      */
     public static function __callStatic(string $method, array $parameters)
     {
@@ -519,8 +417,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Convert the model to its string representation.
-     *
-     * @return string
      */
     public function __toString()
     {
@@ -531,11 +427,8 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Indicate that the object's string representation should be escaped when __toString is invoked.
-     *
-     * @param  bool  $escape
-     * @return $this
      */
-    public function escapeWhenCastingToString($escape = true): static
+    public function escapeWhenCastingToString(bool $escape = true): static
     {
         $this->escapeWhenCastingToString = $escape;
 
@@ -544,8 +437,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * Prepare the object for serialization.
-     *
-     * @return array
      */
     public function __sleep()
     {
@@ -559,8 +450,6 @@ abstract class Model implements Arrayable, ArrayAccess, Jsonable, JsonSerializab
 
     /**
      * When a model is being unserialized, check if it needs to be booted.
-     *
-     * @return void
      */
     public function __wakeup()
     {
