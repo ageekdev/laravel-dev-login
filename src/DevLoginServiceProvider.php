@@ -12,21 +12,21 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class DevLoginServiceProvider extends PackageServiceProvider
 {
-    public function bootingPackage()
+    public function bootingPackage(): void
     {
         $this->registerRoutes();
     }
 
-    public function packageBooted()
+    public function packageBooted(): void
     {
         $provider_driver = config('dev-login.auth.provider_driver', 'config_user');
         $guard_name = config('dev-login.auth.guard_name', 'developer');
 
-        Config::set('auth.guards.' . $guard_name, [
+        Config::set('auth.guards.'.$guard_name, [
             'driver' => 'session',
             'provider' => $provider_driver,
         ]);
-        Config::set('auth.providers.' . $provider_driver, [
+        Config::set('auth.providers.'.$provider_driver, [
             'driver' => $provider_driver,
         ]);
 
@@ -46,15 +46,13 @@ class DevLoginServiceProvider extends PackageServiceProvider
 
     /**
      * Register the Developer Login routes.
-     *
-     * @return void
      */
-    protected function registerRoutes()
+    protected function registerRoutes(): void
     {
         Route::group([
             'prefix' => config('dev-login.path', 'dev'),
         ], function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+            $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
     }
 }

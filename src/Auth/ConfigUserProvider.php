@@ -21,8 +21,6 @@ class ConfigUserProvider implements UserProvider
 
     /**
      * Create a new config user provider.
-     *
-     * @return void
      */
     public function __construct(array $user_data)
     {
@@ -31,11 +29,8 @@ class ConfigUserProvider implements UserProvider
 
     /**
      * Retrieve a user by their unique identifier.
-     *
-     * @param mixed $identifier
-     * @return DevUser|null
      */
-    public function retrieveById($identifier): ?DevUser
+    public function retrieveById(mixed $identifier): ?DevUser
     {
         $filteredUser = $this->user_data->where('id', $identifier)->first();
         if ($filteredUser) {
@@ -48,8 +43,8 @@ class ConfigUserProvider implements UserProvider
     /**
      * Retrieve a user by their unique identifier and "remember me" token.
      *
-     * @param mixed $identifier
-     * @param string $token
+     * @param  mixed  $identifier
+     * @param  string  $token
      * @return DevUser|null
      */
     public function retrieveByToken($identifier, $token): ?DevUser
@@ -66,8 +61,8 @@ class ConfigUserProvider implements UserProvider
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param Authenticatable $user
-     * @param string $token
+     * @param  Authenticatable  $user
+     * @param  string  $token
      * @return void
      */
     public function updateRememberToken(Authenticatable $user, $token): void
@@ -77,7 +72,7 @@ class ConfigUserProvider implements UserProvider
     /**
      * Retrieve a user by the given credentials.
      *
-     * @param array $credentials
+     * @param  array  $credentials
      * @return DevUser|null
      */
     public function retrieveByCredentials(array $credentials): ?DevUser
@@ -94,13 +89,13 @@ class ConfigUserProvider implements UserProvider
     /**
      * Get the generic user.
      *
-     * @param mixed $user
+     * @param  mixed  $user
      * @return DevUser|null
      */
     protected function getGenericUser(mixed $user): ?DevUser
     {
         if (! is_null($user)) {
-            return new DevUser((array)$user);
+            return new DevUser((array) $user);
         }
 
         return null;
@@ -109,8 +104,8 @@ class ConfigUserProvider implements UserProvider
     /**
      * Validate a user against the given credentials.
      *
-     * @param Authenticatable $user
-     * @param array $credentials
+     * @param  Authenticatable  $user
+     * @param  array  $credentials
      * @return bool
      */
     public function validateCredentials(Authenticatable $user, array $credentials): bool

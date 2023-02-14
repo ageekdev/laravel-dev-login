@@ -12,9 +12,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property-read string $name
  * @property-read bool $remember_me
  */
-class DevUser extends Model implements
-    AuthenticatableContract,
-    AuthorizableContract
+class DevUser extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use ConfigUserAuthenticatable;
     use Authorizable;
@@ -27,7 +25,8 @@ class DevUser extends Model implements
 
     /**
      * The attributes that should be hidden for serialization.
-     * @var array
+     *
+     * @var array<string>
      */
     protected $hidden = [
         'password',

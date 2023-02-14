@@ -124,7 +124,7 @@ trait AuthenticatesUsers
      * The user has been authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  mixed $user
+     * @param  mixed  $user
      * @return mixed|void
      */
     protected function authenticated(Request $request, $user)
