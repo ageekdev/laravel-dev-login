@@ -94,7 +94,6 @@ class CreateDevUserCommand extends Command
             'email' => $this->email,
             'name' => $this->developerName,
             'password' => Hash::make($this->password),
-            'remember_token' => '',
         ];
         $data['users'] = $users;
 

@@ -15,14 +15,14 @@ class TestCase extends Orchestra
 {
     use AuthenticatesUsers;
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             DevLoginServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
         $this->setLoginData();
     }
@@ -34,7 +34,7 @@ class TestCase extends Orchestra
         parent::tearDown();
     }
 
-    protected function handleRequestUsing(Request $request, callable $callback)
+    protected function handleRequestUsing(Request $request, callable $callback): TestResponse
     {
         return new TestResponse(
             (new Pipeline($this->app))
@@ -46,14 +46,14 @@ class TestCase extends Orchestra
         );
     }
 
-    public function getLoginData()
+    public function getLoginData(): \Illuminate\Support\Collection
     {
         $users = Config::get('dev-login.users');
 
         return collect($users);
     }
 
-    public function setLoginData()
+    public function setLoginData(): void
     {
         Config::set('dev-login.users', [
             [
