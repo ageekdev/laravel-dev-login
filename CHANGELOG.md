@@ -2,6 +2,13 @@
 
 All notable changes to `dev-login` will be documented in this file.
 
+## v1.1.1 - 2023-04-04
+
+### Changed
+
+- Fix Logout
+- Change code styling
+
 ## v1.1.0 - 2023-02-14
 
 ### Added
