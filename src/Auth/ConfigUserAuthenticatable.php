@@ -9,15 +9,11 @@ trait ConfigUserAuthenticatable
 {
     /**
      * The column name of the "remember me" token.
-     *
-     * @var string
      */
     protected string $rememberTokenName = 'remember_token';
 
     /**
      * Get the name of the unique identifier for the user.
-     *
-     * @return string
      */
     public function getAuthIdentifierName(): string
     {

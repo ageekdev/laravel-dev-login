@@ -81,11 +81,6 @@ class CreateDevUserCommand extends Command
         ]);
     }
 
-    /**
-     * @param  array  $arr
-     * @param  string  $path
-     * @return void
-     */
     public function insertDeveloper(array $arr, string $path): void
     {
         $users = $arr['users'];

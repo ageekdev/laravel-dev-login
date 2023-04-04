@@ -14,8 +14,6 @@ class ConfigUserProvider implements UserProvider
 {
     /**
      * The table containing the users.
-     *
-     * @var Collection
      */
     protected Collection $user_data;
 
@@ -45,7 +43,6 @@ class ConfigUserProvider implements UserProvider
      *
      * @param  mixed  $identifier
      * @param  string  $token
-     * @return DevUser|null
      */
     public function retrieveByToken($identifier, $token): ?DevUser
     {
@@ -61,9 +58,7 @@ class ConfigUserProvider implements UserProvider
     /**
      * Update the "remember me" token for the given user in storage.
      *
-     * @param  Authenticatable  $user
      * @param  string  $token
-     * @return void
      */
     public function updateRememberToken(Authenticatable $user, $token): void
     {
@@ -71,9 +66,6 @@ class ConfigUserProvider implements UserProvider
 
     /**
      * Retrieve a user by the given credentials.
-     *
-     * @param  array  $credentials
-     * @return DevUser|null
      */
     public function retrieveByCredentials(array $credentials): ?DevUser
     {
@@ -88,9 +80,6 @@ class ConfigUserProvider implements UserProvider
 
     /**
      * Get the generic user.
-     *
-     * @param  mixed  $user
-     * @return DevUser|null
      */
     protected function getGenericUser(mixed $user): ?DevUser
     {
@@ -103,10 +92,6 @@ class ConfigUserProvider implements UserProvider
 
     /**
      * Validate a user against the given credentials.
-     *
-     * @param  Authenticatable  $user
-     * @param  array  $credentials
-     * @return bool
      */
     public function validateCredentials(Authenticatable $user, array $credentials): bool
     {
