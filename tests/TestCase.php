@@ -6,6 +6,8 @@ use AgeekDev\DevLogin\Auth\AuthenticatesUsers;
 use AgeekDev\DevLogin\DevLoginServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Pipeline;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Testing\TestResponse;
@@ -40,13 +42,13 @@ class TestCase extends Orchestra
             (new Pipeline($this->app))
                 ->send($request)
                 ->through([
-                    \Illuminate\Session\Middleware\StartSession::class,
+                    StartSession::class,
                 ])
                 ->then($callback)
         );
     }
 
-    public function getLoginData(): \Illuminate\Support\Collection
+    public function getLoginData(): Collection
     {
         $users = Config::get('dev-login.users');
 

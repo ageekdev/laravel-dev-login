@@ -16,5 +16,5 @@ it('it can generate throttle key', function () {
     $request->expects('input')->with('email')->andReturn($data['email']);
     $request->expects('ip')->andReturn('127.0.0.1');
 
-    $this->assertSame($data['email'].'|127.0.0.1', $method->invoke($throttle, $request));
+    expect($method->invoke($throttle, $request))->toBe($data['email'].'|127.0.0.1');
 });
