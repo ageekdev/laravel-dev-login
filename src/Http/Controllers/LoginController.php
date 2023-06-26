@@ -9,8 +9,8 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected function redirectTo()
+    protected function redirectTo(): string
     {
-        return config('dev-login.home', '/dev/home');
+        return route('dev-login.dashboard');
     }
 }

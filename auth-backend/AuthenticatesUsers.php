@@ -2,10 +2,12 @@
 
 namespace AgeekDev\DevLogin\Auth;
 
-use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 
 trait AuthenticatesUsers
 {
@@ -13,10 +15,8 @@ trait AuthenticatesUsers
 
     /**
      * Show the application's login form.
-     *
-     * @return \Illuminate\View\View
      */
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('dev-login::auth.login');
     }
@@ -61,69 +61,44 @@ trait AuthenticatesUsers
     /**
      * Validate the user login request.
      *
-     * @return void
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function validateLogin(Request $request)
+    protected function validateLogin(Request $request): void
     {
         $request->validate([
-            $this->username() => 'required|string',
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
     }
 
     /**
      * Attempt to log the user into the application.
-     *
-     * @return bool
      */
-    protected function attemptLogin(Request $request)
+    protected function attemptLogin(Request $request): bool
     {
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            $this->credentials($request)
         );
     }
 
     /**
      * Get the needed authorization credentials from the request.
-     *
-     * @return array
      */
-    protected function credentials(Request $request)
+    protected function credentials(Request $request): array
     {
-        return $request->only($this->username(), 'password');
+        return $request->only('email', 'password');
     }
 
     /**
      * Send the response after the user was authenticated.
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    protected function sendLoginResponse(Request $request)
+    protected function sendLoginResponse(Request $request): RedirectResponse
     {
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-                    ? new JsonResponse([], 204)
-                    : redirect()->intended($this->redirectPath());
-    }
-
-    /**
-     * The user has been authenticated.
-     *
-     * @param  mixed  $user
-     * @return mixed|void
-     */
-    protected function authenticated(Request $request, $user)
-    {
-        //
+        return redirect()->intended($this->redirectPath());
     }
 
     /**
@@ -136,26 +111,14 @@ trait AuthenticatesUsers
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            'email' => [trans('auth.failed')],
         ]);
     }
 
     /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return 'email';
-    }
-
-    /**
      * Log the user out of the application.
-     *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         $this->guard()->logout();
 
@@ -163,31 +126,13 @@ trait AuthenticatesUsers
 
         $request->session()->regenerateToken();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect()->route('dev-login.login');
-    }
-
-    /**
-     * The user has logged out of the application.
-     *
-     * @return mixed|void
-     */
-    protected function loggedOut(Request $request)
-    {
-        //
+        return redirect()->route('dev-login.login');
     }
 
     /**
      * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    protected function guard()
+    protected function guard(): Guard
     {
         return Auth::guard(config('dev-login.auth.guard_name'));
     }

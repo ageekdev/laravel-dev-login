@@ -1,18 +1,32 @@
 <?php
 
 return [
+
     /*
     |--------------------------------------------------------------------------
-    | DevLogin Redirect Path
+    | DevLogin Redirect Path And Home Route
     |--------------------------------------------------------------------------
     |
-    | This is used by DevLogin authentication to redirect users after login.
-    | Feel free to change this path to anything you like. Note that the URI
-    | will not affect the laravel home route.
+    | This is used by DevLogin authentication to redirect users after login and
+    | home route. Feel free to change this path to anything you like.
+    | Note that the URI will not affect the laravel home route.
     |
     */
 
-    'home' => '/dev/home',
+    'home' => env('DEV_LOGIN_HOME', 'dashboard'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | DevLogin Domain
+    |--------------------------------------------------------------------------
+    |
+    | This is the subdomain where Dev Login will be accessible from. If the
+    | setting is null, Telescope will reside under the same domain as the
+    | application. Otherwise, this value will be used as the subdomain.
+    |
+    */
+
+    'domain' => env('DEV_LOGIN_DOMAIN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +68,5 @@ return [
     |
     */
 
-    'users' => [
-
-    ],
+    'users' => [],
 ];

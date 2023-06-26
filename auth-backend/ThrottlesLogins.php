@@ -5,18 +5,16 @@ namespace AgeekDev\DevLogin\Auth;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response as Http;
 
 trait ThrottlesLogins
 {
     /**
      * Determine if the user has too many failed login attempts.
-     *
-     * @return bool
      */
-    protected function hasTooManyLoginAttempts(Request $request)
+    protected function hasTooManyLoginAttempts(Request $request): bool
     {
         return $this->limiter()->tooManyAttempts(
             $this->throttleKey($request), $this->maxAttempts()
@@ -25,10 +23,8 @@ trait ThrottlesLogins
 
     /**
      * Increment the login attempts for the user.
-     *
-     * @return void
      */
-    protected function incrementLoginAttempts(Request $request)
+    protected function incrementLoginAttempts(Request $request): void
     {
         $this->limiter()->hit(
             $this->throttleKey($request), $this->decayMinutes() * 60
@@ -38,80 +34,66 @@ trait ThrottlesLogins
     /**
      * Redirect the user after determining they are locked out.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
-    protected function sendLockoutResponse(Request $request)
+    protected function sendLockoutResponse(Request $request): Http
     {
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
 
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.throttle', [
+            'email' => [trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ])],
-        ])->status(Response::HTTP_TOO_MANY_REQUESTS);
+        ])->status(Http::HTTP_TOO_MANY_REQUESTS);
     }
 
     /**
      * Clear the login locks for the given user credentials.
-     *
-     * @return void
      */
-    protected function clearLoginAttempts(Request $request)
+    protected function clearLoginAttempts(Request $request): void
     {
         $this->limiter()->clear($this->throttleKey($request));
     }
 
     /**
      * Fire an event when a lockout occurs.
-     *
-     * @return void
      */
-    protected function fireLockoutEvent(Request $request)
+    protected function fireLockoutEvent(Request $request): void
     {
         event(new Lockout($request));
     }
 
     /**
      * Get the throttle key for the given request.
-     *
-     * @return string
      */
-    protected function throttleKey(Request $request)
+    protected function throttleKey(Request $request): string
     {
-        return Str::transliterate(Str::lower($request->input($this->username())).'|'.$request->ip());
+        return Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
     }
 
     /**
      * Get the rate limiter instance.
-     *
-     * @return \Illuminate\Cache\RateLimiter
      */
-    protected function limiter()
+    protected function limiter(): RateLimiter
     {
         return app(RateLimiter::class);
     }
 
     /**
      * Get the maximum number of attempts to allow.
-     *
-     * @return int
      */
-    public function maxAttempts()
+    public function maxAttempts(): int
     {
         return property_exists($this, 'maxAttempts') ? $this->maxAttempts : 5;
     }
 
     /**
      * Get the number of minutes to throttle for.
-     *
-     * @return int
      */
-    public function decayMinutes()
+    public function decayMinutes(): int
     {
         return property_exists($this, 'decayMinutes') ? $this->decayMinutes : 1;
     }
