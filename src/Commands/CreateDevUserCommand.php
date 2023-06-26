@@ -3,35 +3,58 @@
 namespace AgeekDev\DevLogin\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CreateDevUserCommand extends Command
 {
+    /**
+     * The name and signature of the console command.
+     */
+    public $signature = 'dev:user
+                         {--name= : The name of dev user}
+                         {--email= : The email of dev user (valid & unique)}
+                         {--password= : The password of dev user (min 8 characters)}';
+
+    /**
+     * The console command description.
+     */
+    public $description = 'Create a new dev user';
+
+    /**
+     * Developer email.
+     */
     protected string $email;
 
+    /**
+     * Developer name.
+     */
     protected string $developerName;
 
+    /**
+     * Developer password.
+     */
     protected string $password;
 
-    protected string $password_confirmation;
-
+    /**
+     * Check empty developer user array regex pattern.
+     */
     protected string $emptyPattern = "/[\"\']+users[\"\']\s+\=>\s+\[([\s\S]*?)\],/";
 
-    protected string $pattern = "/[\"']+users[\"']\s+=>\s+\[+([\s\S])+(?<=id|email|name|password|remember_token)+([\s\S])+(?<='|',)+(\n\s+|\n|\s+|)+(],|])+(\n\s+],|\n],|\s+],|\n\s+]|\n]|\s+])/";
+    /**
+     * Get developer users array regex pattern.
+     */
+    protected string $pattern = "/[\"']+users[\"']\s+=>\s+\[+([\s\S])+(?<=id|email|name|password|remember_token)+([\s\S])+(?<='|',)+(\n\s+|\n|)+(],|])+(\n\s+],|\n],|\s+],|\n\s+]|\n]|\s+])/";
 
-    public $signature = 'dev:user';
-
-    public $description = 'Create Developer User';
-
+    /**
+     * Execute the console command.
+     */
     public function handle(): int
     {
         if (! File::exists(config_path('dev-login.php'))) {
-            $this->error('please run php artisan vendor:publish --provider="AgeekDev\DevLogin\DevLoginServiceProvider" --tag=dev-login-config');
-
-            return self::INVALID;
+            $this->callSilent('vendor:publish', ['--tag' => 'dev-login-config', '--force' => true]);
         }
 
         $this->takeInput();
@@ -39,7 +62,7 @@ class CreateDevUserCommand extends Command
         $validator = $this->checkValidation();
 
         if ($validator->fails()) {
-            $this->info('Dev User not created. See error messages below:');
+            $this->info("Dev user can't create. See error messages below:");
 
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
@@ -48,44 +71,59 @@ class CreateDevUserCommand extends Command
             return self::INVALID;
         }
 
-        $path = config_path('dev-login.php');
-        $arr = include config_path('dev-login.php');
+        $users = config('dev-login.users', []);
 
-        $collect = collect(Arr::get($arr, 'users', []));
-        $checkUserEmail = $collect->where('email', $this->email)->first();
-
-        if ($checkUserEmail) {
-            $this->error('User already exist');
+        if ($this->isUserExist($users)) {
+            $this->error('Dev user already exist');
 
             return self::INVALID;
         }
 
-        $this->insertDeveloper($arr, $path);
-        $this->info('Dev User created.');
+        $this->insertDeveloper();
+
+        $this->showSuccessMassage();
 
         return self::SUCCESS;
     }
 
-    public function checkValidation(): \Illuminate\Contracts\Validation\Validator
+    private function isUserExist(array $users): bool
+    {
+        return collect($users)->where('email', $this->email)->isNotEmpty();
+    }
+
+    private function showSuccessMassage(): void
+    {
+        $loginUrl = route('dev-login.login');
+        $this->info('Successfully created!! '.$this->email." can sign in at {$loginUrl} now.");
+    }
+
+    /**
+     * Validate new developer input.
+     */
+    private function checkValidation(): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make([
             'name' => $this->developerName,
             'email' => $this->email,
             'password' => $this->password,
-            'password_confirmation' => $this->password_confirmation,
         ], [
             'name' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', 'min:8'],
-            'password_confirmation' => ['required', 'same:password', 'min:8'],
+            'password' => ['required', 'min:8'],
         ]);
     }
 
-    public function insertDeveloper(array $arr, string $path): void
+    /**
+     * Append new developer to dev-login config file.
+     */
+    private function insertDeveloper(): void
     {
-        $users = $arr['users'];
+        $path = config_path('dev-login.php');
+        $devLoginConfig = config('dev-login');
+
+        $users = $devLoginConfig['users'];
         $users[] = [
-            'id' => uniqid('', true),
+            'id' => Str::ulid()->generate(),
             'email' => $this->email,
             'name' => $this->developerName,
             'password' => Hash::make($this->password),
@@ -93,19 +131,25 @@ class CreateDevUserCommand extends Command
         $data['users'] = $users;
 
         $data = $this->varExport($data);
-        $data = $this->replaceArrayIndex(count($arr), $data);
+        $data = $this->replaceArrayIndex(count($devLoginConfig), $data);
         $data = $this->removeParentArray($data);
-        $data = $this->replaceUsersString(empty($arr['users']), $data, file_get_contents($path));
+        $data = $this->replaceUsersString(empty($devLoginConfig['users']), $data, File::get($path));
 
-        file_put_contents($path, $data);
+        File::put($path, $data);
     }
 
-    public function takeInput(): void
+    /**
+     * Ask new developer information.
+     */
+    private function takeInput(): void
     {
-        $this->email = $this->ask('Login Email?');
-        $this->developerName = $this->ask('Developer Name?');
-        $this->password = $this->secret('Password');
-        $this->password_confirmation = $this->secret('Password Confirmation');
+        //        $this->email = $this->ask('Email');
+        //        $this->developerName = $this->ask('Name');
+        //        $this->password = $this->secret('Password');
+
+        $this->email = 'test2@dev.com';
+        $this->developerName = 'test2';
+        $this->password = 'password';
     }
 
     /**
@@ -115,7 +159,7 @@ class CreateDevUserCommand extends Command
     private function varExport(array $context): string
     {
         $export = var_export($context, true);
-        $export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
+        $export = preg_replace('/^( *)(.*)/m', '$1$1$2', $export);
         $array = preg_split("/\r\n|\n|\r/", $export);
         $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [null, ']$1', ' => ['], $array);
 
@@ -153,6 +197,8 @@ class CreateDevUserCommand extends Command
      */
     private function replaceUsersString(bool $isEmptyPattern, string $replace, string $context): string
     {
-        return preg_replace($isEmptyPattern ? $this->emptyPattern : $this->pattern, $replace, $context);
+        preg_match($isEmptyPattern ? $this->emptyPattern : $this->pattern, $context, $result);
+
+        return str_replace($result[0], $replace, $context);
     }
 }
