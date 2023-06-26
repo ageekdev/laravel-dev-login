@@ -18,20 +18,10 @@ composer require ageekdev/dev-login
 
 The package will automatically register itself.
 
-## Edit configuration
-
-Publish dev-login.php configuration file into /config/ for configuration customization:
+After installing Dev Login, you may publish its assets using the `dev:install` Artisan command:
 
 ```bash
-php artisan vendor:publish --tag=dev-login-config
-```
-
-## Customize view
-
-Publish into /resources/views/vendor/dev-login for view customization:
-
-```bash
-php artisan vendor:publish --tag=dev-login-views 
+php artisan dev:install
 ```
 
 ## Setup developer account
