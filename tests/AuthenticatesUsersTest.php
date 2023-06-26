@@ -2,13 +2,6 @@
 
 use function Pest\Laravel\post;
 
-//it('test login screen can be rendered', function () {
-//    $response = $this->get(route('dev-login.login.show'));
-//
-//    $response->assertStatus(200);
-//
-//});
-
 it('can authenticate a user', function ($email) {
     $response = post(route('dev-login.login'), [
         'email' => $email,
