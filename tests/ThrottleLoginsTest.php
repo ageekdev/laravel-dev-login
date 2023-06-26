@@ -3,7 +3,7 @@
 use AgeekDev\DevLogin\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 
-it('it can generate throttle key', function () {
+it('can generate throttle key', function () {
     $data = $this->getLoginData()->first();
 
     $throttle = $this->getMockForTrait(ThrottlesLogins::class, [], '', true, true, true, ['username']);

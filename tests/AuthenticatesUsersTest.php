@@ -2,17 +2,30 @@
 
 use function Pest\Laravel\post;
 
-it('can authenticate a user', function ($email, $password) {
-    post(route('dev-login.login'), [
+//it('test login screen can be rendered', function () {
+//    $response = $this->get(route('dev-login.login.show'));
+//
+//    $response->assertStatus(200);
+//
+//});
+
+it('can authenticate a user', function ($email) {
+    $response = post(route('dev-login.login'), [
         'email' => $email,
         'password' => '12345678',
-    ])->assertSessionHasNoErrors();
+    ]);
+
+    $this->assertAuthenticated(config('dev-login.auth.guard_name'));
+    $response->assertRedirect(route('dev-login.dashboard'));
+
 })->with('logins');
 
-it('is invalid login', function ($email, $password, $errors) {
+it('can not authenticate with invalid login', function ($email, $password) {
     post(route('dev-login.login'), [
         'email' => $email,
         'password' => $password,
-    ])->assertSessionHasErrors($errors);
+    ]);
+
+    $this->assertGuest(config('dev-login.auth.guard_name'));
 
 })->with('invalid_logins');
