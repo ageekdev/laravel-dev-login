@@ -143,13 +143,9 @@ class CreateDevUserCommand extends Command
      */
     private function takeInput(): void
     {
-        //        $this->email = $this->ask('Email');
-        //        $this->developerName = $this->ask('Name');
-        //        $this->password = $this->secret('Password');
-
-        $this->email = 'test2@dev.com';
-        $this->developerName = 'test2';
-        $this->password = 'password';
+        $this->email = $this->ask('Email');
+        $this->developerName = $this->ask('Name');
+        $this->password = $this->secret('Password');
     }
 
     /**
