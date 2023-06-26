@@ -4,20 +4,58 @@ namespace AgeekDev\DevLogin;
 
 use AgeekDev\DevLogin\Auth\ConfigUserProvider;
 use AgeekDev\DevLogin\Commands\CreateDevUserCommand;
+use AgeekDev\DevLogin\Commands\InstallCommand;
+use AgeekDev\DevLogin\Commands\PublishCommand;
+use AgeekDev\DevLogin\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class DevLoginServiceProvider extends PackageServiceProvider
+class DevLoginServiceProvider extends ServiceProvider
 {
-    public function bootingPackage(): void
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
     {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'dev-login');
+
+        $this->registerAuth();
+
+        Route::aliasMiddleware('dev-guest', RedirectIfAuthenticated::class);
+
         $this->registerRoutes();
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/dev-login.php' => config_path('dev-login.php'),
+            ], 'dev-login-config');
+
+            $this->publishes([
+                __DIR__.'/../public' => public_path('vendor/dev-login'),
+            ], ['dev-login-assets']);
+
+            $this->commands([
+                CreateDevUserCommand::class,
+                InstallCommand::class,
+                PublishCommand::class,
+            ]);
+        }
     }
 
-    public function packageBooted(): void
+    /**
+     * Register the service provider.
+     */
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/dev-login.php', 'dev-login');
+    }
+
+    /**
+     * Register the Developer Login auth.
+     */
+    public function registerAuth(): void
     {
         $provider_driver = config('dev-login.auth.provider_driver', 'config_user');
         $guard_name = config('dev-login.auth.guard_name', 'developer');
@@ -35,24 +73,25 @@ class DevLoginServiceProvider extends PackageServiceProvider
         });
     }
 
-    public function configurePackage(Package $package): void
-    {
-        $package
-            ->name('dev-login')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasCommand(CreateDevUserCommand::class);
-    }
-
     /**
      * Register the Developer Login routes.
      */
     protected function registerRoutes(): void
     {
-        Route::group([
-            'prefix' => config('dev-login.path', 'dev'),
-        ], function () {
+        Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
+    }
+
+    /**
+     * Get the Dev Login route group configuration array
+     */
+    private function routeConfiguration(): array
+    {
+        return [
+            'domain' => config('dev-login.domain'),
+            'prefix' => config('dev-login.path'),
+            'middleware' => 'web',
+        ];
     }
 }
