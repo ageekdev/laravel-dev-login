@@ -8,6 +8,8 @@
 
 This package allows you to login the developer associate actions (e.g.log views).
 
+<img src="./docs/screenshot.png" alt="dev login screenshot"/>
+
 ## Installation
 
 You can install this package via composer using this command:
