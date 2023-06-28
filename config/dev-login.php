@@ -4,12 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | DevLogin Redirect Path And Home Route
+    | Home Route
     |--------------------------------------------------------------------------
     |
-    | This is used by DevLogin authentication to redirect users after login and
-    | home route. Feel free to change this path to anything you like.
-    | Note that the URI will not affect the laravel home route.
+    | This is the path name that to modify DevLogin's home path.
+    | By default, the home path is "dashboard".
     |
     */
 
@@ -17,12 +16,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Redirect Path
+    |--------------------------------------------------------------------------
+    |
+    | This path that to redirect after user login. Default redirect path is
+    | DevLogin's home route.
+    |
+    */
+
+    'redirect_path' => env('DEV_LOGIN_REDIRECT_PATH'),
+
+    /*
+    |--------------------------------------------------------------------------
     | DevLogin Domain
     |--------------------------------------------------------------------------
     |
-    | This is the subdomain where Dev Login will be accessible from. If the
-    | setting is null, Telescope will reside under the same domain as the
-    | application. Otherwise, this value will be used as the subdomain.
+    | This is you can change DevLogin subdomain. If the value is empty,
+    | it will be as the application domain.
     |
     */
 
@@ -33,9 +43,7 @@ return [
     | DevLogin Path
     |--------------------------------------------------------------------------
     |
-    | This is the URI path where DevLogin will be accessible from. Feel free
-    | to change this path to anything you like. Note that the URI will not
-    | affect the paths of its internal API that aren't exposed to users.
+    | This is the prefix of DevLogin route. Default path is "dev".
     |
     */
 
@@ -59,12 +67,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Dev Users
+    | DevLogin Users
     |--------------------------------------------------------------------------
     |
     | The following array lists is dev users data that will access dev login.
-    | In additional, You are free to modify these users as needed to restrict
-    | access to your logs route.
     |
     */
 

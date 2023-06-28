@@ -53,7 +53,7 @@ class DevLoginServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the Developer Login auth.
+     * Register the Dev Login auth.
      */
     public function registerAuth(): void
     {
@@ -74,7 +74,7 @@ class DevLoginServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the Developer Login routes.
+     * Register the Dev Login routes.
      */
     protected function registerRoutes(): void
     {
