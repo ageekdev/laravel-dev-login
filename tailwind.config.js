@@ -1,6 +1,10 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        './resources/views/auth/login.blade.php',
-        './resources/views/dashboard.blade.php',
+        "./resources/**/*.blade.php",
     ],
-};
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+}

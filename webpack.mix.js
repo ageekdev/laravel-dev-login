@@ -1,6 +1,4 @@
 const mix = require('laravel-mix');
-const tailwindcss = require('tailwindcss');
-const webpack = require('webpack');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,12 +11,8 @@ const webpack = require('webpack');
  |
  */
 
-mix.options({
-    autoprefixer: {
-        enabled: true,
-        options: { remove: false }
-    }
-})
-    .css('resources/css/dev-login.css', 'app.css', [require('postcss-import'), require('tailwindcss')])
+mix.postCss("resources/css/dev-login.css", "app.css", [
+    require("tailwindcss"),
+])
     .setPublicPath('public')
     .version();
