@@ -11,6 +11,6 @@ class LoginController extends Controller
 
     protected function redirectTo(): string
     {
-        return route('dev-login.dashboard');
+        return config('dev-login.redirect_path') ?? route('dev-login.dashboard');
     }
 }
