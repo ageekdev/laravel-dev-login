@@ -11,7 +11,7 @@ Route::middleware('dev-guest')->group(function () {
 });
 
 Route::middleware('auth:'.config('dev-login.auth.guard_name', 'developer'))->group(function () {
-    Route::get(config('dev-login.home', 'dashboard'), [DashboardController::class,'index'])->name('dev-login.dashboard');
+    Route::get(config('dev-login.home', 'dashboard'), [DashboardController::class, 'index'])->name('dev-login.dashboard');
     Route::view('info', 'dev-login::info')->name('dev-login.info')->middleware(EnsurePhpInfoIsEnabled::class);
     Route::post('logout', [LoginController::class, 'logout'])->name('dev-login.logout');
 });
