@@ -7,7 +7,7 @@ class PHPInfo
     /**
      * Get the current php version.
      */
-    public function PhpVersion(): string
+    public function phpVersion(): string
     {
         return PHP_VERSION;
     }
