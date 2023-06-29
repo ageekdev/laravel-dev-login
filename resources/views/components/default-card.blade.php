@@ -15,7 +15,7 @@
                 </div>
                 <div class="mt-4 mb-4 flex items-start px-1 text-sm w-full">
                     <div class="pr-1 font-mono text-slate-500">
-                        @for($i = 1; $i <= 6; $i++, STR_PAD_RIGHT)
+                        @for($i = 1; $i <= 6; $i++)
                             <div>{{ str_pad(0, 2, $i) }}</div>
                         @endfor
                     </div>
