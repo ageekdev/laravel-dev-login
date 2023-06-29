@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" class="h-full bg-slate-900">
 
-@include('dev-login::partials.head')
+@include('dev-login::partials.head',['title' => 'Dashboard'])
 
 <body class="bg-slate-900 min-h-full">
 <div>

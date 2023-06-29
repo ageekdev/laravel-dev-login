@@ -1,15 +1,8 @@
 <!doctype html>
 <html lang="en" class="h-full bg-slate-900">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="shortcut icon" href="{{ asset('/vendor/dev-login/favicon.ico') }}">
 
-    <link href="{{ asset(mix('app.css', 'vendor/dev-login')) }}" rel="stylesheet" type="text/css" />
+@include('dev-login::partials.head',['title' => 'Login'])
 
-    <title>Login - DevLogin</title>
-</head>
 <body class="h-full">
 <div class="h-full bg-slate-900 w-full py-16 px-4">
     <div class="flex flex-col items-center justify-center">

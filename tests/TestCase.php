@@ -17,6 +17,13 @@ class TestCase extends Orchestra
 {
     use AuthenticatesUsers;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('dev:publish', ['--force' => true])->run();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [

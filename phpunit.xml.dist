@@ -11,18 +11,10 @@
     beStrictAboutOutputDuringTests="true"
 >
     <testsuites>
-        <testsuite name="Genie Fintech Test Suite">
+        <testsuite name="Dev Login Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <source>
-        <include>
-            <directory suffix=".php">src/</directory>
-        </include>
-    </source>
-    <logging>
-        <junit outputFile="build/report.junit.xml"/>
-    </logging>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>

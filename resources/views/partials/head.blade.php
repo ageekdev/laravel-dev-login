@@ -6,5 +6,5 @@
 
     <link href="{{ asset(mix('app.css', 'vendor/dev-login')) }}" rel="stylesheet" type="text/css" />
 
-    <title>Dashboard - DevLogin</title>
+    <title>{{ $title }} - DevLogin</title>
 </head>

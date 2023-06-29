@@ -51,6 +51,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | PHP INFO
+    |--------------------------------------------------------------------------
+    |
+    | This is information of PHP Info such as php version, laravel version,
+    | post max size, upload max file size, memory limit, and loaded extensions.
+    |
+    */
+
+    'phpinfo' => [
+        'enabled' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Guard & Prover Driver Name
     |--------------------------------------------------------------------------
     |
