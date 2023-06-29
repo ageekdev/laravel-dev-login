@@ -18,26 +18,8 @@
 
             <div class="mx-auto mt-1 pt-4 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 sm:mt-3 sm:pt-3 lg:mx-0 lg:max-w-none lg:grid-cols-3">
 
-                    @includeWhen(Route::has('vapor-ui'), 'dev-login::components.default-card',
-                        [
-                            'url' => route('telescope'),
-                            'title' => 'Telescope',
-                            'desc' => "Debug your application using telescope debugging and insight UI."
-                        ])
+                @each('dev-login::components.default-card', $defaultApps, 'defaultApp')
 
-                    @includeWhen(Route::has('vapor-ui'), 'dev-login::components.default-card',
-                        [
-                            'url' => route('vapor-ui'),
-                            'title' => 'Vapor UI',
-                            'desc' => "A beautiful dashboard accessible via your Vapor application that allows you to view/search your application's logs and failed queue jobs."
-                        ])
-
-                    @includeWhen(Route::has('horizon.index'), 'dev-login::components.default-card',
-                        [
-                            'url' => route('horizon.index'),
-                            'title' => 'Horizon',
-                            'desc' => "Beautiful UI for monitoring your Redis driven Laravel queues."
-                        ])
             </div>
         </div>
     </div>
