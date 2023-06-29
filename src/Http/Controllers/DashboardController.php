@@ -4,10 +4,11 @@ namespace AgeekDev\DevLogin\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function __invoke()
+    public function index(): View
     {
         return view('dev-login::dashboard')->with('defaultApps', $this->getDefaultApps());
     }
