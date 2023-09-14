@@ -15,8 +15,8 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  */
 class DevUser extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use ConfigUserAuthenticatable;
     use Authorizable;
+    use ConfigUserAuthenticatable;
 
     public $timestamps = false;
 

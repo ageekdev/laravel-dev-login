@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Config;
+
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
