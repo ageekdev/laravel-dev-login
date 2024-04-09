@@ -2,6 +2,16 @@
 
 All notable changes to `dev-login` will be documented in this file.
 
+## v3.0.0 - 2024-04-09
+
+### What's New
+
+- Support laravel 11.x
+
+### What's Changed
+
+- Drop support for Laravel 9.x
+
 ## v2.0.0 - 2023-07-10
 
 It's important that you carefully review [the upgrade guide](https://github.com/ageekdev/laravel-dev-login/blob/main/UPGRADING.md).
