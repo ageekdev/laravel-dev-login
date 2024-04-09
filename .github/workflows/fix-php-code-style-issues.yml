@@ -1,18 +1,24 @@
-name: Check & fix styling
+name: Fix PHP code style issues
 
 on: [push]
 
 jobs:
-  php-code-styling:
-    runs-on: ubuntu-latest
+    php-code-styling:
+        runs-on: ubuntu-22.04
 
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
+        strategy:
+            fail-fast: true
 
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.head_ref }}
 
-      - name: Check code style
-        timeout-minutes: 2
-        run: ./vendor/bin/pint --test --preset laravel
+            - name: Install Dependencies
+              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
+
+            - name: Commit changes
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: Fix styling

@@ -2,13 +2,13 @@
 
 dataset('logins', [
     [
-        'email' => 'genie-dev@geniefintech.com',
+        'email' => 'dev@test.com',
         'password' => '6R0XMNEU',
     ],
 ]);
 dataset('invalid_logins', [
     [
-        'email' => 'genie-dev@geniefintech.com',
+        'email' => 'dev@test.com',
         'password' => 'wrong_password',
     ],
     [

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class UseDevLoginGuard
 {
-    public function handle(Request $request, Closure $next, string $guard = null): mixed
+    public function handle(Request $request, Closure $next, ?string $guard = null): mixed
     {
         auth()->setDefaultDriver(config('dev-login.auth.guard_name'));
 

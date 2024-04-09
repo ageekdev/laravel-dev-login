@@ -35,4 +35,9 @@ class DevUser extends Model implements AuthenticatableContract, AuthorizableCont
         'password',
         'remember_token',
     ];
+
+    public function getAuthPasswordName(): string
+    {
+        return 'password';
+    }
 }
