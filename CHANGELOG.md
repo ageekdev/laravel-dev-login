@@ -2,6 +2,14 @@
 
 All notable changes to `dev-login` will be documented in this file.
 
+## v3.1.0 - 2025-03-02
+
+### What's Changed
+
+* Support Laravel 12.x by @tintnaingwinn in https://github.com/ageekdev/laravel-dev-login/pull/7
+
+**Full Changelog**: https://github.com/ageekdev/laravel-dev-login/compare/v3.0.0...v3.1.0
+
 ## v3.0.0 - 2024-04-09
 
 ### What's New
