@@ -2,10 +2,10 @@
 
 use function Pest\Laravel\post;
 
-it('can authenticate a user', function ($email) {
+it('can authenticate a user', function ($email, $password) {
     $response = post(route('dev-login.login'), [
         'email' => $email,
-        'password' => '12345678',
+        'password' => $password,
     ]);
 
     $this->assertAuthenticated(config('dev-login.auth.guard_name'));

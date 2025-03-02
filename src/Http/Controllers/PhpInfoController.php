@@ -10,7 +10,7 @@ class PhpInfoController extends Controller
 {
     public function index(): View
     {
-        $phpinfo = new PHPInfo();
+        $phpinfo = new PHPInfo;
 
         return view('dev-login::phpinfo.info', compact('phpinfo'));
     }

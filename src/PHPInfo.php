@@ -22,6 +22,8 @@ class PHPInfo
 
     /**
      * Get post_max_size from php.ini.
+     *
+     * @return array<string, string>
      */
     public function postMaxSize(): array
     {
@@ -30,6 +32,8 @@ class PHPInfo
 
     /**
      * Get upload_max_filesize from php.ini.
+     *
+     * @return array<string, string>
      */
     public function uploadMaxFilesize(): array
     {
@@ -38,6 +42,8 @@ class PHPInfo
 
     /**
      * Get memory_limit from php.ini.
+     *
+     * @return array<string, string>
      */
     public function memoryLimit(): array
     {
@@ -46,6 +52,8 @@ class PHPInfo
 
     /**
      * Get max_execution_time from php.ini.
+     *
+     * @return array<string, string>
      */
     public function maxExecutionTime(): array
     {
@@ -54,6 +62,8 @@ class PHPInfo
 
     /**
      * Get the current loaded php extensions.
+     *
+     * @return array<string>
      */
     public function loadedExtensions(): array
     {
@@ -65,6 +75,8 @@ class PHPInfo
 
     /**
      * Format value and metric of size.
+     *
+     * @return array<string, int|string>
      */
     private function formatSize(string $size): array
     {
