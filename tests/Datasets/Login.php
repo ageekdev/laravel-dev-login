@@ -3,7 +3,7 @@
 dataset('logins', [
     [
         'email' => 'dev@test.com',
-        'password' => '6R0XMNEU',
+        'password' => '12345678',
     ],
 ]);
 dataset('invalid_logins', [

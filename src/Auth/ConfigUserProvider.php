@@ -60,9 +60,7 @@ class ConfigUserProvider implements UserProvider
      *
      * @param  string  $token
      */
-    public function updateRememberToken(Authenticatable $user, $token): void
-    {
-    }
+    public function updateRememberToken(Authenticatable $user, $token): void {}
 
     /**
      * Retrieve a user by the given credentials.
@@ -102,7 +100,5 @@ class ConfigUserProvider implements UserProvider
         return false;
     }
 
-    public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false)
-    {
-    }
+    public function rehashPasswordIfRequired(Authenticatable $user, array $credentials, bool $force = false) {}
 }

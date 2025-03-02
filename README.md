@@ -1,8 +1,9 @@
 <h1 align="center">Laravel Developer Login</h1>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ageekdev/dev-login.svg?style=flat-square)](https://packagist.org/packages/ageekdev/dev-login)
-[![Laravel 9.x](https://img.shields.io/badge/Laravel-9.x-red.svg?style=flat-square)](https://laravel.com/docs/9.x)
 [![Laravel 10.x](https://img.shields.io/badge/Laravel-10.x-red.svg?style=flat-square)](https://laravel.com/docs/10.x)
+[![Laravel 11.x](https://img.shields.io/badge/Laravel-11.x-red.svg?style=flat-square)](https://laravel.com/docs/11.x)
+[![Laravel 12.x](https://img.shields.io/badge/Laravel-12.x-red.svg?style=flat-square)](https://laravel.com/docs/12.x)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/ageekdev/laravel-dev-login/run-tests.yml?label=tests&style=flat-square)](https://github.com/ageekdev/laravel-dev-login/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/ageekdev/dev-login.svg?style=flat-square)](https://packagist.org/packages/ageekdev/dev-login)
 

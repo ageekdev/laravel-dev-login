@@ -9,6 +9,7 @@ trait RedirectsUsers
      */
     public function redirectPath(): string
     {
+        /** @phpstan-ignore-next-line  */
         if (method_exists($this, 'redirectTo')) {
             return $this->redirectTo();
         }

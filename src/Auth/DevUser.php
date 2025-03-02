@@ -28,8 +28,6 @@ class DevUser extends Model implements AuthenticatableContract, AuthorizableCont
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
      */
     protected $hidden = [
         'password',
