@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 trait AuthenticatesUsers
 {
@@ -24,9 +25,9 @@ trait AuthenticatesUsers
     /**
      * Handle a login request to the application.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function login(Request $request)
     {
@@ -62,7 +63,7 @@ trait AuthenticatesUsers
     /**
      * Validate the user login request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     protected function validateLogin(Request $request): void
     {
@@ -105,9 +106,9 @@ trait AuthenticatesUsers
     /**
      * Get the failed login response instance.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     protected function sendFailedLoginResponse(Request $request)
     {

@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 it('can generate throttle key', function () {
     $data = $this->getLoginData()->first();
 
-    $throttle = new class {
+    $throttle = new class
+    {
         use ThrottlesLogins;
-        public function username() {
+
+        public function username()
+        {
             return 'email';
         }
     };
-    $reflection = new \ReflectionClass($throttle);
+    $reflection = new ReflectionClass($throttle);
     $method = $reflection->getMethod('throttleKey');
     $method->setAccessible(true);
 
