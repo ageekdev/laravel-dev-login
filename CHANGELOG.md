@@ -2,6 +2,17 @@
 
 All notable changes to `dev-login` will be documented in this file.
 
+## v3.2.0 - 2026-03-21
+
+### What's Changed
+
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/ageekdev/laravel-dev-login/pull/8
+* chore(deps): bump actions/checkout from 4 to 6 by @dependabot[bot] in https://github.com/ageekdev/laravel-dev-login/pull/11
+* chore(deps): bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/ageekdev/laravel-dev-login/pull/10
+* Laravel 13.x Support by @tintnaingwin in https://github.com/ageekdev/laravel-dev-login/pull/12
+
+**Full Changelog**: https://github.com/ageekdev/laravel-dev-login/compare/v3.1.0...v3.2.0
+
 ## v3.1.0 - 2025-03-02
 
 ### What's Changed
